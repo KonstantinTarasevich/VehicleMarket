@@ -1,6 +1,6 @@
 package my.vehiclemarket.web;
 
-import my.vehiclemarket.service.ExchangeRateService;
+import my.vehiclemarket.service.impl.ExchangeRateServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,11 @@ import java.util.Map;
 @RequestMapping("/api/exchange-rates")
 public class ExchangeRateController {
 
-    private ExchangeRateService exchangeRateService;
+    private ExchangeRateServiceImpl exchangeRateServiceImpl;
 
     @GetMapping("/latest")
     public ResponseEntity<Map<String, Double>> getLatestExchangeRates() {
-        Map<String, Double> exchangeRates = exchangeRateService.getCurrentExchangeRates();
+        Map<String, Double> exchangeRates = exchangeRateServiceImpl.getCurrentExchangeRates();
         return ResponseEntity.ok(exchangeRates);
     }
 }
