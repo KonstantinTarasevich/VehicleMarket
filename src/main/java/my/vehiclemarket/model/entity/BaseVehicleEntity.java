@@ -2,47 +2,54 @@ package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
 import my.vehiclemarket.model.enums.CityEnum;
+import my.vehiclemarket.model.enums.CurrencyEnum;
+
+import java.util.Currency;
 
 @MappedSuperclass
 public abstract class BaseVehicleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    private long id;
 
     @Column(unique = true, nullable = false)
-    protected String name;
+    private String name;
 
     @Column(nullable = false)
-    protected String brand;
+    private String brand;
 
     @Column(nullable = false)
-    protected String model;
+    private String model;
 
     @ManyToOne(optional = false)
-    protected UserEntity owner;
+    private UserEntity owner;
 
     @Column(nullable = false, name = "image_URL")
-    protected String imageURL;
+    private String imageURL;
 
     @Column(nullable = false)
-    protected double fuelConsumption;
+    private double fuelConsumption;
 
     @Column(nullable = false)
-    protected String description;
-
-    @Column(nullable = false)
-    protected double price;
-
-    @Column(nullable = false, name = "days_active")
-    protected int daysActive;
-
-    @Column(nullable = false, name = "isActive")
-    protected boolean isActive;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    protected CityEnum city;
+    private CurrencyEnum currency;
+
+    @Column(nullable = false)
+    private double price;
+
+    @Column(nullable = false, name = "days_active")
+    private int daysActive;
+
+    @Column(nullable = false, name = "isActive")
+    private boolean isActive;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CityEnum city;
 
 
     public long getId() {
@@ -150,6 +157,15 @@ public abstract class BaseVehicleEntity {
 
     public BaseVehicleEntity setCity(CityEnum city) {
         this.city = city;
+        return this;
+    }
+
+    public CurrencyEnum getCurrency() {
+        return currency;
+    }
+
+    public BaseVehicleEntity setCurrency(CurrencyEnum currency) {
+        this.currency = currency;
         return this;
     }
 }
