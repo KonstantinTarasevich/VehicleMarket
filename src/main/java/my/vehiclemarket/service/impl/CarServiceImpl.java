@@ -13,12 +13,12 @@ public class CarServiceImpl implements CarService {
     private ExchangeRateServiceImpl exchangeRateServiceImpl;
 
 
-    private void convertPricesToCurrency(List<CarEntity> cars, String targetCurrency) {
-        cars.forEach(car -> {
-            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
-            double convertedPrice = car.getPrice() * exchangeRate;
-            car.setPrice(convertedPrice);
-            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
-        });
-    }
+//    private void convertPricesToCurrency(List<CarEntity> cars, String targetCurrency) {
+//        cars.forEach(car -> {
+//            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
+//            double convertedPrice = car.getPrice() * exchangeRate;
+//            car.setPrice(convertedPrice);
+//            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
+//        });
+//    }
 }

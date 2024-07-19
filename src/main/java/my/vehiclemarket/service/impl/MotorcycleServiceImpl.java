@@ -12,12 +12,12 @@ public class MotorcycleServiceImpl implements MotorcycleService {
 
     private ExchangeRateServiceImpl exchangeRateServiceImpl;
 
-    private void convertPricesToCurrency(List<MotorcycleEntity> cars, String targetCurrency) {
-        cars.forEach(car -> {
-            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
-            double convertedPrice = car.getPrice() * exchangeRate;
-            car.setPrice(convertedPrice);
-            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
-        });
-    }
+//    private void convertPricesToCurrency(List<MotorcycleEntity> cars, String targetCurrency) {
+//        cars.forEach(car -> {
+//            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
+//            double convertedPrice = car.getPrice() * exchangeRate;
+//            car.setPrice(convertedPrice);
+//            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
+//        });
+//    }
 }
