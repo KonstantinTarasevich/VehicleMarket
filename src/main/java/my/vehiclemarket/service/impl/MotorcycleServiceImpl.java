@@ -1,7 +1,7 @@
 package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.entity.MotorcycleEntity;
-import my.vehiclemarket.model.enums.CurrencyEnum;
+import my.vehiclemarket.repos.MotorcycleRepository;
 import my.vehiclemarket.service.MotorcycleService;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +10,35 @@ import java.util.List;
 @Service
 public class MotorcycleServiceImpl implements MotorcycleService {
 
-    private ExchangeRateServiceImpl exchangeRateServiceImpl;
+    private final MotorcycleRepository motorcycleRepository;
 
-//    private void convertPricesToCurrency(List<MotorcycleEntity> cars, String targetCurrency) {
-//        cars.forEach(car -> {
-//            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
-//            double convertedPrice = car.getPrice() * exchangeRate;
-//            car.setPrice(convertedPrice);
-//            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
-//        });
-//    }
+    public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository) {
+        this.motorcycleRepository = motorcycleRepository;
+    }
+
+    @Override
+    public List<MotorcycleEntity> findAll() {
+        return motorcycleRepository.findAll();
+    }
+
+    @Override
+    public MotorcycleEntity findById(Long id) {
+        return motorcycleRepository.findById(id).orElse(null);
+    }
+
+
+    @Override
+    public MotorcycleEntity save(MotorcycleEntity motorcycle) {
+        return motorcycleRepository.save(motorcycle);
+    }
+
+    @Override
+    public MotorcycleEntity update(MotorcycleEntity motorcycle) {
+        return motorcycleRepository.update(motorcycle);
+    }
+
+    @Override
+    public void delete(Long id) {
+        motorcycleRepository.deleteById(id);
+    }
 }

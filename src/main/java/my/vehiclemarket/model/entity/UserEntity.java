@@ -1,6 +1,7 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
+import my.vehiclemarket.model.enums.RolesEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,9 @@ public class UserEntity extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private RolesEnum Role;
 
     @OneToMany(mappedBy = "owner")
     private List<CarEntity> addedCars;
@@ -168,6 +172,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setFavouriteTrucks(List<TruckEntity> favouriteTrucks) {
         this.favouriteTrucks = favouriteTrucks;
+        return this;
+    }
+
+    public RolesEnum getRole() {
+        return Role;
+    }
+
+    public UserEntity setRole(RolesEnum role) {
+        Role = role;
         return this;
     }
 }

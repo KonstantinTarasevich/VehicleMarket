@@ -1,7 +1,7 @@
 package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.entity.CarEntity;
-import my.vehiclemarket.model.enums.CurrencyEnum;
+import my.vehiclemarket.repos.CarRepository;
 import my.vehiclemarket.service.CarService;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +10,34 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
 
-    private ExchangeRateServiceImpl exchangeRateServiceImpl;
+    private final CarRepository carRepository;
 
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
-//    private void convertPricesToCurrency(List<CarEntity> cars, String targetCurrency) {
-//        cars.forEach(car -> {
-//            double exchangeRate = exchangeRateServiceImpl.getExchangeRate(targetCurrency);
-//            double convertedPrice = car.getPrice() * exchangeRate;
-//            car.setPrice(convertedPrice);
-//            car.setCurrency(CurrencyEnum.valueOf(targetCurrency));
-//        });
-//    }
+    @Override
+    public List<CarEntity> findAll() {
+        return carRepository.findAll();
+    }
+
+    @Override
+    public CarEntity findById(Long id) {
+        return carRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public CarEntity save(CarEntity car) {
+        return carRepository.save(car);
+    }
+
+    @Override
+    public CarEntity update(CarEntity car) {
+        return carRepository.update(car);
+    }
+
+    @Override
+    public void delete(Long id) {
+        carRepository.deleteById(id);
+    }
 }

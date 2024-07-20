@@ -2,9 +2,6 @@ package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
 import my.vehiclemarket.model.enums.CityEnum;
-import my.vehiclemarket.model.enums.CurrencyEnum;
-
-import java.util.Currency;
 
 @MappedSuperclass
 public abstract class BaseVehicleEntity {
@@ -33,10 +30,6 @@ public abstract class BaseVehicleEntity {
 
     @Column(nullable = false)
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CurrencyEnum currency;
 
     @Column(nullable = false)
     private double price;
@@ -157,15 +150,6 @@ public abstract class BaseVehicleEntity {
 
     public BaseVehicleEntity setCity(CityEnum city) {
         this.city = city;
-        return this;
-    }
-
-    public CurrencyEnum getCurrency() {
-        return currency;
-    }
-
-    public BaseVehicleEntity setCurrency(CurrencyEnum currency) {
-        this.currency = currency;
         return this;
     }
 }

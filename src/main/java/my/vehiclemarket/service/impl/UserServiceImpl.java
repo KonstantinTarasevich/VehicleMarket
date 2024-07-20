@@ -1,60 +1,43 @@
 package my.vehiclemarket.service.impl;
 
-import  my.vehiclemarket.config.UserSession;
-import  my.vehiclemarket.model.dto.UserLoginDTO;
-import  my.vehiclemarket.model.dto.UserRegisterDTO;
 import  my.vehiclemarket.model.entity.UserEntity;
 import  my.vehiclemarket.repos.UserRepository;
 import my.vehiclemarket.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserSession userSession;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSession userSession) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userSession = userSession;
     }
 
-    public boolean register(UserRegisterDTO data) {
-        Optional<UserEntity> existingUser = userRepository.findByUsernameOrEmail(data.getUsername(), data.getEmail());
-
-        if (existingUser.isPresent()) {
-            return false;
-        }
-
-        UserEntity user = new UserEntity();
-        user.setUsername(data.getUsername());
-        user.setEmail(data.getEmail());
-        user.setPassword(passwordEncoder.encode(data.getPassword()));
-
-        this.userRepository.save(user);
-
-        return true;
+    @Override
+    public List<UserEntity> findAll() {
+        return userRepository.findAll();
     }
 
-    public boolean login(UserLoginDTO data) {
-        Optional<UserEntity> byUsername = userRepository.findByUsername(data.getUsername());
+    @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
-        if (byUsername.isEmpty()) {
-            return false;
-        }
-        boolean passMatch = passwordEncoder
-                .matches(data.getPassword(), byUsername.get().getPassword());
+    @Override
+    public UserEntity save(UserEntity user) {
+        return userRepository.save(user);
+    }
 
-        if (!passMatch) {
-            return false;
-        }
+    @Override
+    public UserEntity update(UserEntity user) {
+        return userRepository.update(user);
+    }
 
-        userSession.login(byUsername.get().getId(), data.getUsername());
-
-        return true;
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 }
