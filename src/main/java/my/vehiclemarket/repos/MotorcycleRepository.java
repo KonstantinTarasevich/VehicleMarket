@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MotorcycleRepository extends JpaRepository<MotorcycleEntity, Long> {
-    MotorcycleEntity update(MotorcycleEntity motorcycle);
+
 }

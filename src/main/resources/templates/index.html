@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>VehicleMarket</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
-<div th:insert="~{fragments/navbar :: navbar}"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 <div class="container mt-5">
-    <h1>Welcome to My Spring Boot App</h1>
-    <p>Select a category to start:</p>
+    <h1>Welcome to VehicleMarket</h1>
+    <p>Select vehicle type to start:</p>
     <div class="d-flex justify-content-around mt-4">
         <a href="/boats" th:href="@{/boats}" class="btn btn-primary">Boats</a>
         <a href="/cars" th:href="@{/cars}" class="btn btn-primary">Cars</a>
@@ -19,7 +19,7 @@
         <a href="/motorcycles" th:href="@{/motorcycles}" class="btn btn-primary">Motorcycles</a>
     </div>
 </div>
-<footer th:insert="~{fragments/footer :: footer}"></footer>
+<div th:replace="fragments/footer :: footer"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

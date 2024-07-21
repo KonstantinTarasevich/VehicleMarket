@@ -1,31 +1,25 @@
 package my.vehiclemarket.controller;
 
+import my.vehiclemarket.service.impl.BoatServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.BoatEntityDTO;
-import my.vehiclemarket.model.entity.BoatEntity;
-import my.vehiclemarket.service.BoatService;
-import org.modelmapper.ModelMapper;
 
 @Controller
 @RequestMapping("/boats")
 public class BoatController {
 
-    private final BoatService boatService;
-    private final ModelMapper modelMapper;
+    private final BoatServiceImpl boatService;
 
-    public BoatController(BoatService boatService, ModelMapper modelMapper) {
+    public BoatController(BoatServiceImpl boatService) {
         this.boatService = boatService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping
     public String listBoats(Model model) {
-        model.addAttribute("boats", boatService.findAll().stream()
-                .map(boat -> modelMapper.map(boat, BoatEntityDTO.class))
-                .toList());
-        return "boats";
+        model.addAttribute("boats", boatService.findAll());
+        return "list-boats";
     }
 
     @GetMapping("/add")
@@ -36,25 +30,23 @@ public class BoatController {
 
     @PostMapping("/add")
     public String addBoat(@ModelAttribute BoatEntityDTO boatDTO) {
-        BoatEntity boat = modelMapper.map(boatDTO, BoatEntity.class);
-        boatService.save(boat);
+        boatService.save(boatDTO);
         return "redirect:/boats";
     }
 
     @GetMapping("/edit/{id}")
     public String editBoatForm(@PathVariable Long id, Model model) {
-        BoatEntity boat = boatService.findById(id);
-        if (boat != null) {
-            model.addAttribute("boat", modelMapper.map(boat, BoatEntityDTO.class));
+        BoatEntityDTO boatDTO = boatService.findById(id);
+        if (boatDTO != null) {
+            model.addAttribute("boat", boatDTO);
             return "edit-boat";
         }
         return "redirect:/boats";
     }
 
-    @PostMapping("/edit")
-    public String editBoat(@ModelAttribute BoatEntityDTO boatDTO) {
-        BoatEntity boat = modelMapper.map(boatDTO, BoatEntity.class);
-        boatService.save(boat);
+    @PostMapping("/edit/{id}")
+    public String editBoat(@PathVariable Long id, @ModelAttribute BoatEntityDTO boatDTO) {
+        boatService.update(id, boatDTO);
         return "redirect:/boats";
     }
 

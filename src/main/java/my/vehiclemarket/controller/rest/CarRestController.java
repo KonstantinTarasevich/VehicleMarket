@@ -1,9 +1,8 @@
 package my.vehiclemarket.controller.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import my.vehiclemarket.model.entity.CarEntity;
-import my.vehiclemarket.service.CarService;
+import my.vehiclemarket.model.dto.CarEntityDTO;
+import my.vehiclemarket.service.impl.CarServiceImpl;
 
 import java.util.List;
 
@@ -11,31 +10,26 @@ import java.util.List;
 @RequestMapping("/api/cars")
 public class CarRestController {
 
-    private final CarService carService;
-
-    public CarRestController(CarService carService) {
-        this.carService = carService;
-    }
+    private CarServiceImpl carService;
 
     @GetMapping
-    public List<CarEntity> getAllCars() {
+    public List<CarEntityDTO> listCars() {
         return carService.findAll();
     }
 
     @GetMapping("/{id}")
-    public CarEntity getCarById(@PathVariable Long id) {
+    public CarEntityDTO getCar(@PathVariable Long id) {
         return carService.findById(id);
     }
 
     @PostMapping
-    public CarEntity createCar(@RequestBody CarEntity car) {
-        return carService.save(car);
+    public CarEntityDTO addCar(@RequestBody CarEntityDTO carDTO) {
+        return carService.save(carDTO);
     }
 
     @PutMapping("/{id}")
-    public CarEntity updateCar(@PathVariable Long id, @RequestBody CarEntity car) {
-        car.setId(id);
-        return carService.save(car);
+    public CarEntityDTO updateCar(@PathVariable Long id, @RequestBody CarEntityDTO carDTO) {
+        return carService.update(id, carDTO);
     }
 
     @DeleteMapping("/{id}")

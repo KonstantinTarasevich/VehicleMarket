@@ -1,9 +1,8 @@
 package my.vehiclemarket.controller.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import my.vehiclemarket.model.entity.MotorcycleEntity;
-import my.vehiclemarket.service.MotorcycleService;
+import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
+import my.vehiclemarket.service.impl.MotorcycleServiceImpl;
 
 import java.util.List;
 
@@ -11,28 +10,30 @@ import java.util.List;
 @RequestMapping("/api/motorcycles")
 public class MotorcycleRestController {
 
-    @Autowired
-    private MotorcycleService motorcycleService;
+    private final MotorcycleServiceImpl motorcycleService;
+
+    public MotorcycleRestController(MotorcycleServiceImpl motorcycleService) {
+        this.motorcycleService = motorcycleService;
+    }
 
     @GetMapping
-    public List<MotorcycleEntity> getAllMotorcycles() {
+    public List<MotorcycleEntityDTO> listMotorcycles() {
         return motorcycleService.findAll();
     }
 
     @GetMapping("/{id}")
-    public MotorcycleEntity getMotorcycleById(@PathVariable Long id) {
+    public MotorcycleEntityDTO getMotorcycle(@PathVariable Long id) {
         return motorcycleService.findById(id);
     }
 
     @PostMapping
-    public MotorcycleEntity createMotorcycle(@RequestBody MotorcycleEntity motorcycle) {
-        return motorcycleService.save(motorcycle);
+    public MotorcycleEntityDTO addMotorcycle(@RequestBody MotorcycleEntityDTO motorcycleDTO) {
+        return motorcycleService.save(motorcycleDTO);
     }
 
     @PutMapping("/{id}")
-    public MotorcycleEntity updateMotorcycle(@PathVariable Long id, @RequestBody MotorcycleEntity motorcycle) {
-        motorcycle.setId(id);
-        return motorcycleService.save(motorcycle);
+    public MotorcycleEntityDTO updateMotorcycle(@PathVariable Long id, @RequestBody MotorcycleEntityDTO motorcycleDTO) {
+        return motorcycleService.update(id, motorcycleDTO);
     }
 
     @DeleteMapping("/{id}")

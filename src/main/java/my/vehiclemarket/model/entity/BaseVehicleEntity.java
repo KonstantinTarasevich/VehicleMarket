@@ -37,9 +37,6 @@ public abstract class BaseVehicleEntity {
     @Column(nullable = false, name = "days_active")
     private int daysActive;
 
-    @Column(nullable = false, name = "isActive")
-    private boolean isActive;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CityEnum city;
@@ -132,15 +129,6 @@ public abstract class BaseVehicleEntity {
 
     public BaseVehicleEntity setDaysActive(int daysActive) {
         this.daysActive = daysActive;
-        return this;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public BaseVehicleEntity setActive(boolean active) {
-        isActive = active;
         return this;
     }
 

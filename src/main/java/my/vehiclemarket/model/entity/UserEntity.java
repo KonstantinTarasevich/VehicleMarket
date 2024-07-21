@@ -11,10 +11,7 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     @Column(nullable = false, name = "first_name")
-    private String firstName;
-
-    @Column(nullable = false, name = "last_name")
-    private String lastName;
+    private String name;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -24,6 +21,9 @@ public class UserEntity extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String phone;
 
     @Column(nullable = false)
     private RolesEnum Role;
@@ -58,21 +58,12 @@ public class UserEntity extends BaseEntity {
         this.favouriteTrucks = new ArrayList<>();
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public UserEntity setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public UserEntity setLastName(String lastName) {
-        this.lastName = lastName;
+    public UserEntity setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -181,6 +172,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRole(RolesEnum role) {
         Role = role;
+        return this;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserEntity setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 }

@@ -1,9 +1,8 @@
 package my.vehiclemarket.controller.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import my.vehiclemarket.model.entity.BoatEntity;
-import my.vehiclemarket.service.BoatService;
+import my.vehiclemarket.model.dto.BoatEntityDTO;
+import my.vehiclemarket.service.impl.BoatServiceImpl;
 
 import java.util.List;
 
@@ -11,28 +10,30 @@ import java.util.List;
 @RequestMapping("/api/boats")
 public class BoatRestController {
 
-    @Autowired
-    private BoatService boatService;
+    private final BoatServiceImpl boatService;
+
+    public BoatRestController(BoatServiceImpl boatService) {
+        this.boatService = boatService;
+    }
 
     @GetMapping
-    public List<BoatEntity> getAllBoats() {
+    public List<BoatEntityDTO> listBoats() {
         return boatService.findAll();
     }
 
     @GetMapping("/{id}")
-    public BoatEntity getBoatById(@PathVariable Long id) {
+    public BoatEntityDTO getBoat(@PathVariable Long id) {
         return boatService.findById(id);
     }
 
     @PostMapping
-    public BoatEntity createBoat(@RequestBody BoatEntity boat) {
-        return boatService.save(boat);
+    public BoatEntityDTO addBoat(@RequestBody BoatEntityDTO boatDTO) {
+        return boatService.save(boatDTO);
     }
 
     @PutMapping("/{id}")
-    public BoatEntity updateBoat(@PathVariable Long id, @RequestBody BoatEntity boat) {
-        boat.setId(id);
-        return boatService.save(boat);
+    public BoatEntityDTO updateBoat(@PathVariable Long id, @RequestBody BoatEntityDTO boatDTO) {
+        return boatService.update(id, boatDTO);
     }
 
     @DeleteMapping("/{id}")

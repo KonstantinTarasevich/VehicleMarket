@@ -12,7 +12,49 @@
 <div class="container mt-5">
     <h1>Profile</h1>
     <p>Manage your profile here.</p>
-    <!-- Profile management functionality -->
+
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <button class="btn btn-primary" onclick="window.location.href='/edit-profile'">Edit Profile</button>
+            <button class="btn btn-danger" onclick="deleteProfile()">Delete Profile</button>
+        </div>
+        <div class="form-group">
+            <label for="vehicleTypeSelector">Select Vehicle Type:</label>
+            <select class="form-control" id="vehicleTypeSelector" onchange="filterVehicles()">
+                <option value="cars">Cars</option>
+                <option value="boats">Boats</option>
+                <option value="trucks">Trucks</option>
+                <option value="motorcycles">Motorcycles</option>
+                <option value="favorites">Favorites</option>
+            </select>
+        </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="vehicleTableBody">
+        <tr th:each="vehicle : ${vehicles}">
+            <td th:text="${vehicle.id}"></td>
+            <td th:text="${vehicle.type}"></td>
+            <td th:text="${vehicle.brand}"></td>
+            <td th:text="${vehicle.model}"></td>
+            <td th:text="${vehicle.year}"></td>
+            <td>
+                <a th:href="@{/edit-vehicle/{id}(id=${vehicle.id})}" class="btn btn-sm btn-primary">Edit</a>
+                <a th:href="@{/delete-vehicle/{id}(id=${vehicle.id})}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div th:replace="fragments/footer :: footer"></div>
 
@@ -20,5 +62,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
+<script>
+    function filterVehicles() {
+        var selectedType = document.getElementById("vehicleTypeSelector").value;
+        var rows = document.querySelectorAll("#vehicleTableBody tr");
+
+        rows.forEach(function(row) {
+            var type = row.querySelector("td:nth-child(2)").textContent;
+            if (type.toLowerCase() === selectedType.toLowerCase() || selectedType === "favorites") {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function deleteProfile() {
+        if (confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
+            window.location.href = '/delete-profile';
+        }
+    }
+</script>
 </body>
 </html>

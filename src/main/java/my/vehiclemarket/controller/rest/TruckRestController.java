@@ -1,9 +1,8 @@
 package my.vehiclemarket.controller.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import my.vehiclemarket.model.entity.TruckEntity;
-import my.vehiclemarket.service.TruckService;
+import my.vehiclemarket.model.dto.TruckEntityDTO;
+import my.vehiclemarket.service.impl.TruckServiceImpl;
 
 import java.util.List;
 
@@ -11,28 +10,30 @@ import java.util.List;
 @RequestMapping("/api/trucks")
 public class TruckRestController {
 
-    @Autowired
-    private TruckService truckService;
+    private final TruckServiceImpl truckService;
+
+    public TruckRestController(TruckServiceImpl truckService) {
+        this.truckService = truckService;
+    }
 
     @GetMapping
-    public List<TruckEntity> getAllTrucks() {
+    public List<TruckEntityDTO> listTrucks() {
         return truckService.findAll();
     }
 
     @GetMapping("/{id}")
-    public TruckEntity getTruckById(@PathVariable Long id) {
+    public TruckEntityDTO getTruck(@PathVariable Long id) {
         return truckService.findById(id);
     }
 
     @PostMapping
-    public TruckEntity createTruck(@RequestBody TruckEntity truck) {
-        return truckService.save(truck);
+    public TruckEntityDTO addTruck(@RequestBody TruckEntityDTO truckDTO) {
+        return truckService.save(truckDTO);
     }
 
     @PutMapping("/{id}")
-    public TruckEntity updateTruck(@PathVariable Long id, @RequestBody TruckEntity truck) {
-        truck.setId(id);
-        return truckService.save(truck);
+    public TruckEntityDTO updateTruck(@PathVariable Long id, @RequestBody TruckEntityDTO truckDTO) {
+        return truckService.update(id, truckDTO);
     }
 
     @DeleteMapping("/{id}")

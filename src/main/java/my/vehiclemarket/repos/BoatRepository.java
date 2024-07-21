@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoatRepository extends JpaRepository<BoatEntity, Long> {
-    BoatEntity update(BoatEntity boat);
 }

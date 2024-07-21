@@ -1,38 +1,53 @@
 package my.vehiclemarket.service.impl;
 
+import my.vehiclemarket.model.dto.TruckEntityDTO;
 import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.repos.TruckRepository;
 import my.vehiclemarket.service.TruckService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TruckServiceImpl implements TruckService {
 
-    private TruckRepository truckRepository;
+    private final TruckRepository truckRepository;
+    private final ModelMapper modelMapper;
 
-    @Override
-    public List<TruckEntity> findAll() {
-        return truckRepository.findAll();
+    public TruckServiceImpl(TruckRepository truckRepository, ModelMapper modelMapper) {
+        this.truckRepository = truckRepository;
+        this.modelMapper = modelMapper;
     }
 
-    @Override
-    public TruckEntity findById(Long id) {
-        return truckRepository.findById(id).orElse(null);
+    public List<TruckEntityDTO> findAll() {
+        return truckRepository.findAll().stream()
+                .map(truck -> modelMapper.map(truck, TruckEntityDTO.class))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public TruckEntity save(TruckEntity truck) {
-        return truckRepository.save(truck);
+    public TruckEntityDTO findById(Long id) {
+        TruckEntity truck = truckRepository.findById(id).orElse(null);
+        return truck != null ? modelMapper.map(truck, TruckEntityDTO.class) : null;
     }
 
-    @Override
-    public TruckEntity update(TruckEntity truck) {
-        return truckRepository.update(truck);
+    public TruckEntityDTO save(TruckEntityDTO truckDTO) {
+        TruckEntity truck = modelMapper.map(truckDTO, TruckEntity.class);
+        truck = truckRepository.save(truck);
+        return modelMapper.map(truck, TruckEntityDTO.class);
     }
 
-    @Override
+    public TruckEntityDTO update(Long id, TruckEntityDTO truckDTO) {
+        TruckEntity existingTruck = truckRepository.findById(id).orElse(null);
+        if (existingTruck != null) {
+            modelMapper.map(truckDTO, existingTruck);
+            existingTruck = truckRepository.save(existingTruck);
+            return modelMapper.map(existingTruck, TruckEntityDTO.class);
+        }
+        return null;
+    }
+
     public void delete(Long id) {
         truckRepository.deleteById(id);
     }

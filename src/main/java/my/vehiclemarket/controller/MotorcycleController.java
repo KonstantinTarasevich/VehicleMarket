@@ -1,31 +1,25 @@
 package my.vehiclemarket.controller;
 
+import my.vehiclemarket.service.impl.MotorcycleServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
-import my.vehiclemarket.model.entity.MotorcycleEntity;
-import my.vehiclemarket.service.MotorcycleService;
-import org.modelmapper.ModelMapper;
 
 @Controller
 @RequestMapping("/motorcycles")
 public class MotorcycleController {
 
-    private final MotorcycleService motorcycleService;
-    private final ModelMapper modelMapper;
+    private final MotorcycleServiceImpl motorcycleService;
 
-    public MotorcycleController(MotorcycleService motorcycleService, ModelMapper modelMapper) {
+    public MotorcycleController(MotorcycleServiceImpl motorcycleService) {
         this.motorcycleService = motorcycleService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping
     public String listMotorcycles(Model model) {
-        model.addAttribute("motorcycles", motorcycleService.findAll().stream()
-                .map(motorcycle -> modelMapper.map(motorcycle, MotorcycleEntityDTO.class))
-                .toList());
-        return "motorcycles";
+        model.addAttribute("motorcycles", motorcycleService.findAll());
+        return "list-motorcycles";
     }
 
     @GetMapping("/add")
@@ -36,25 +30,23 @@ public class MotorcycleController {
 
     @PostMapping("/add")
     public String addMotorcycle(@ModelAttribute MotorcycleEntityDTO motorcycleDTO) {
-        MotorcycleEntity motorcycle = modelMapper.map(motorcycleDTO, MotorcycleEntity.class);
-        motorcycleService.save(motorcycle);
+        motorcycleService.save(motorcycleDTO);
         return "redirect:/motorcycles";
     }
 
     @GetMapping("/edit/{id}")
     public String editMotorcycleForm(@PathVariable Long id, Model model) {
-        MotorcycleEntity motorcycle = motorcycleService.findById(id);
-        if (motorcycle != null) {
-            model.addAttribute("motorcycle", modelMapper.map(motorcycle, MotorcycleEntityDTO.class));
+        MotorcycleEntityDTO motorcycleDTO = motorcycleService.findById(id);
+        if (motorcycleDTO != null) {
+            model.addAttribute("motorcycle", motorcycleDTO);
             return "edit-motorcycle";
         }
         return "redirect:/motorcycles";
     }
 
-    @PostMapping("/edit")
-    public String editMotorcycle(@ModelAttribute MotorcycleEntityDTO motorcycleDTO) {
-        MotorcycleEntity motorcycle = modelMapper.map(motorcycleDTO, MotorcycleEntity.class);
-        motorcycleService.save(motorcycle);
+    @PostMapping("/edit/{id}")
+    public String editMotorcycle(@PathVariable Long id, @ModelAttribute MotorcycleEntityDTO motorcycleDTO) {
+        motorcycleService.update(id, motorcycleDTO);
         return "redirect:/motorcycles";
     }
 
