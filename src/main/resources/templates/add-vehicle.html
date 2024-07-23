@@ -12,10 +12,10 @@
 <div class="container mt-5">
     <h1>Select a type of vehicle you want to add</h1>
     <div class="d-flex justify-content-around mt-4">
-        <a href="/add-boat" th:href="@{/add-boat}" class="btn btn-primary">Boats</a>
-        <a href="/add-car" th:href="@{/add-car}" class="btn btn-primary">Cars</a>
-        <a href="/add-truck" th:href="@{/add-truck}" class="btn btn-primary">Trucks</a>
-        <a href="/add-motorcycle" th:href="@{/add-motorcycle}" class="btn btn-primary">Motorcycles</a>
+        <a href="/add-boat" th:href="@{/boats/add-boat}" class="btn btn-primary">Boats</a>
+        <a href="/add-car" th:href="@{/cars/add-car}" class="btn btn-primary">Cars</a>
+        <a href="/add-truck" th:href="@{/trucks/add-truck}" class="btn btn-primary">Trucks</a>
+        <a href="/add-motorcycle" th:href="@{/motorcycles/add-motorcycle}" class="btn btn-primary">Motorcycles</a>
     </div>
 </div>
 <div th:replace="fragments/footer :: footer"></div>

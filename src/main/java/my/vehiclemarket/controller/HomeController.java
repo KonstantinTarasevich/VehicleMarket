@@ -37,4 +37,11 @@ public class HomeController {
         model.addAttribute("title", "Profile");
         return "profile";
     }
+
+    @GetMapping("/cars")
+    public String showCarsPage(Model model) {
+        model.addAttribute("title", "Cars");
+        return "cars";
+    }
+
 }

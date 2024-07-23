@@ -32,10 +32,11 @@ public class CarServiceImpl implements CarService {
         return car != null ? modelMapper.map(car, CarEntityDTO.class) : null;
     }
 
-    public CarEntityDTO save(CarEntityDTO carDTO) {
-        CarEntity car = modelMapper.map(carDTO, CarEntity.class);
+    public boolean save(CarEntityDTO data) {
+        CarEntity car = modelMapper.map(data, CarEntity.class);
         car = carRepository.save(car);
-        return modelMapper.map(car, CarEntityDTO.class);
+        modelMapper.map(car, CarEntityDTO.class);
+        return true;
     }
 
     public CarEntityDTO update(Long id, CarEntityDTO carDTO) {

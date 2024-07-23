@@ -10,21 +10,215 @@
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 <div class="container mt-5">
-    <h1>Add a New Car</h1>
-    <form method="post" th:action="@{/add-car}">
+
+    <form class="welcome add-offer-form"
+            th:action="@{/cars/add-car}"
+            th:object="${carData}"
+            th:method="POST">
+        <h1 class="text-center mt-2"><span class="badge badge-pill badge-dark">Add Car</span></h1>
         <div class="form-group">
-            <label for="carName">Car Name</label>
-            <input type="text" class="form-control" id="carName" name="carName" required>
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="name" class="h4 mb-2">Name</label>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    th:field="*{name}"
+                    th:errorclass="'is-invalid alert-danger'"
+            />
+            <small th:each="error: ${#fields.errors('name')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="brand" class="h4 mb-2">Brand</label>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="brand"
+                    name="brand"
+                    th:field="*{brand}"
+                    th:errorclass="'is-invalid alert-danger'"
+            />
+            <small th:each="error: ${#fields.errors('brand')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
         </div>
         <div class="form-group">
-            <label for="carType">Car Type</label>
-            <input type="text" class="form-control" id="carType" name="carType" required>
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="model" class="h4 mb-2">Model</label>
+            </div>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="model"
+                    name="model"
+                    th:field="*{model}"
+                    th:errorclass="'is-invalid alert-danger'"
+            />
+            <small th:each="error: ${#fields.errors('model')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="image" class="h4 mb-2">Image URL</label>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="image"
+                    name="image"
+                    th:field="*{imageURL}"
+                    th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:each="error: ${#fields.errors('imageURL')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
         </div>
         <div class="form-group">
-            <label for="price">Price</label>
-            <input type="number" class="form-control" id="price" name="price" required>
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="fuelConsumption" class="h4 mb-2">Fuel Consumption</label>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="fuelConsumption"
+                    name="fuelConsumption"
+                    th:field="*{fuelConsumption}"
+                    th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:each="error: ${#fields.errors('fuelConsumption')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
         </div>
-        <button type="submit" class="btn btn-primary">Add Car</button>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="description" class="h4 mb-2">Description</label>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    th:field="*{description}"
+                    th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:each="error: ${#fields.errors('description')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="price" class="h4 mb-2">Price</label>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="price"
+                    name="price"
+                    th:field="*{price}"
+                    th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:each="error: ${#fields.errors('price')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="transmissionType" class="h4 mb-2">Transmission Type</label>
+            </div>
+            <select
+                    class="browser-default custom-select"
+                    id="transmissionType"
+                    name="transmissionType"
+                    th:field="*{transmissionType}"
+                    th:errorclass="'is-invalid alert-danger'"
+            >
+                <option value="">Select Gearbox type</option>
+                <option value="AUTOMATIC">Automatic</option>
+                <option value="MANUAL">Manual</option>
+
+            </select>
+            <small th:each="error: ${#fields.errors('transmissionType')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="carType" class="h4 mb-2">Car Type</label>
+            </div>
+            <select
+                    class="browser-default custom-select"
+                    id="carType"
+                    name="carType"
+                    th:field="*{carType}"
+                    th:errorclass="'is-invalid alert-danger'"
+            >
+                <option value="">Select Car Type</option>
+                <option value="COUPE">Coupe</option>
+                <option value="HATCHBACK">Hatchback</option>
+                <option value="SEDAN">Sedan</option>
+                <option value="SUV">Suv</option>
+                <option value="ESTATE">Estate</option>
+
+            </select>
+            <small th:each="error: ${#fields.errors('carType')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+        <div class="form-group">
+            <div class="text-white label-holder d-flex justify-content-center">
+                <label for="engineType" class="h4 mb-2">Engine Type</label>
+            </div>
+            <select
+                    class="browser-default custom-select"
+                    id="engineType"
+                    name="engineType"
+                    th:field="*{engineType}"
+                    th:errorclass="'is-invalid alert-danger'"
+            >
+                <option value="">Select Engine Type</option>
+                <option value="DIESEL">Diesel</option>
+                <option value="GASOLINE">Gasoline</option>
+                <option value="ELECTRIC">Electric</option>
+                <option value="LPG">LPG</option>
+                <option value="CNG">CNG</option>
+
+            </select>
+            <small th:each="error: ${#fields.errors('engineType')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+
+
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="horsePower" class="h4 mb-2">Horse Power</label>
+            </div>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="horsePower"
+                    name="horsePower"
+                    th:field="*{horsePower}"
+                    th:errorclass="'is-invalid alert-danger'"
+            ></textarea>
+            <small th:each="error: ${#fields.errors('horsePower')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+        <div>
+            <label for="city">City:</label>
+            <select id="city" th:field="*{city}">
+                <option th:each="type : ${city}" th:value="${city}" th:text="${city}">City</option>
+            </select>
+            <small th:each="error: ${#fields.errors('city')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+
+            <small class="invalid-feedback text-danger"></small>
+        </div>
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-info  mb-3">Add Car</button>
+        </div>
     </form>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
