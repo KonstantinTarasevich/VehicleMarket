@@ -10,6 +10,7 @@ import my.vehiclemarket.repos.CarRepository;
 import my.vehiclemarket.repos.UserRepository;
 import my.vehiclemarket.service.CarService;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
