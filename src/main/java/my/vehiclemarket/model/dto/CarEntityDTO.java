@@ -7,41 +7,45 @@ import my.vehiclemarket.model.enums.*;
 
 public class CarEntityDTO {
 
-    @NotEmpty(message = "Name cannot be empty")
+    @NotNull(message = "Name cannot be empty")
     private String name;
 
-    @NotEmpty(message = "Brand cannot be empty")
+    @NotNull(message = "Brand cannot be empty")
     private String brand;
 
-    @NotEmpty(message = "Model cannot be empty")
+    @NotNull(message = "Model cannot be empty")
     private String model;
 
-    @NotEmpty(message = "Image URL cannot be empty")
+    @NotNull(message = "Image URL cannot be empty")
     private String imageURL;
 
-    @NotEmpty(message = "Fuel Consumption cannot be empty")
+    @NotNull(message = "Fuel Consumption cannot be empty")
     private double fuelConsumption;
 
-    @NotEmpty(message = "Description cannot be empty")
+    @NotNull(message = "Description cannot be empty")
     private String description;
 
+    @NotNull
     @Positive(message = "Price must be a positive number")
     private Double price;
 
-    @NotEmpty(message = "Transmission Type cannot be empty")
+    @NotNull(message = "Transmission Type cannot be empty")
     private TransmissionTypeEnum transmissionType;
 
-    @NotEmpty(message = "Car Type cannot be empty")
+    @NotNull(message = "Car Type cannot be empty")
     private CarTypeEnum carType;
 
-    @NotEmpty(message = "Engine Type cannot be empty")
+    @NotNull(message = "Engine Type cannot be empty")
     private EngineTypeEnum engineType;
 
+    @NotNull
     @Positive(message = "Horse Power must be a positive number")
     private int horsePower;
 
-    @NotNull(message = "City cannot be null")
-    private CityEnum city;
+
+    @NotNull
+    @Positive(message = "Production year must be a positive number")
+    private int productionYear;
 
     public CarEntityDTO() {}
 
@@ -144,12 +148,12 @@ public class CarEntityDTO {
         return this;
     }
 
-    public CityEnum getCity() {
-        return city;
+    public int getProductionYear() {
+        return productionYear;
     }
 
-    public CarEntityDTO setCity(CityEnum city) {
-        this.city = city;
+    public CarEntityDTO setProductionYear(int productionYear) {
+        this.productionYear = productionYear;
         return this;
     }
 }

@@ -1,7 +1,6 @@
 package my.vehiclemarket.model.dto;
 
 import my.vehiclemarket.model.enums.BoatTypeEnum;
-import my.vehiclemarket.model.enums.CityEnum;
 
 public class BoatEntityDTO {
 
@@ -13,7 +12,6 @@ public class BoatEntityDTO {
     private String description;
     private double price;
     private BoatTypeEnum boatType;
-    private CityEnum city;
 
 
     public String getName() {
@@ -80,12 +78,5 @@ public class BoatEntityDTO {
     public void setBoatType(BoatTypeEnum boatType) {
         this.boatType = boatType;
     }
-
-    public CityEnum getCity() {
-        return city;
-    }
-
-    public void setCity(CityEnum city) {
-        this.city = city;
-    }
+    
 }

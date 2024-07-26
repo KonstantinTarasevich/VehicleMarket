@@ -1,7 +1,5 @@
 package my.vehiclemarket.model.dto;
 
-import my.vehiclemarket.model.enums.CityEnum;
-
 public class MotorcycleEntityDTO {
 
     private String name;
@@ -12,7 +10,6 @@ public class MotorcycleEntityDTO {
     private String description;
     private double price;
     private int horsePower;
-    private CityEnum city;
 
 
     public String getName() {
@@ -79,11 +76,4 @@ public class MotorcycleEntityDTO {
         this.horsePower = horsePower;
     }
 
-    public CityEnum getCity() {
-        return city;
-    }
-
-    public void setCity(CityEnum city) {
-        this.city = city;
-    }
 }

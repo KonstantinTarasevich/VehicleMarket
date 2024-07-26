@@ -1,7 +1,6 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
-import my.vehiclemarket.model.enums.CityEnum;
 
 @MappedSuperclass
 public abstract class BaseVehicleEntity {
@@ -37,9 +36,8 @@ public abstract class BaseVehicleEntity {
     @Column(nullable = false, name = "days_active")
     private int daysActive;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private CityEnum city;
+    @Column(nullable = false, name = "production_year")
+    private int productionYear;
 
 
     public long getId() {
@@ -132,12 +130,12 @@ public abstract class BaseVehicleEntity {
         return this;
     }
 
-    public CityEnum getCity() {
-        return city;
+    public int getProductionYear() {
+        return productionYear;
     }
 
-    public BaseVehicleEntity setCity(CityEnum city) {
-        this.city = city;
+    public BaseVehicleEntity setProductionYear(int productionYear) {
+        this.productionYear = productionYear;
         return this;
     }
 }

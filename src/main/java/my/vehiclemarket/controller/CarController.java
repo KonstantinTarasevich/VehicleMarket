@@ -1,7 +1,6 @@
 package my.vehiclemarket.controller;
 
 import jakarta.validation.Valid;
-import my.vehiclemarket.model.enums.CityEnum;
 import my.vehiclemarket.service.impl.CarServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +57,6 @@ public class CarController {
         CarEntityDTO carDTO = carService.findById(id);
         if (carDTO != null) {
             model.addAttribute("carData", carDTO);
-            model.addAttribute("city", CityEnum.values());
             return "edit-car";
         }
         return "redirect:/cars";
@@ -67,7 +65,6 @@ public class CarController {
     @PostMapping("/edit/{id}")
     public String editCar(@PathVariable Long id, @Validated @ModelAttribute("carData") CarEntityDTO carDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("city", CityEnum.values());
             return "edit-car";
         }
         carService.update(id, carDTO);

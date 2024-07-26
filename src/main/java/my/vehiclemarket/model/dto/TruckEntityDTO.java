@@ -1,6 +1,5 @@
 package my.vehiclemarket.model.dto;
 
-import my.vehiclemarket.model.enums.CityEnum;
 import my.vehiclemarket.model.enums.TruckTypeEnum;
 
 public class TruckEntityDTO {
@@ -14,7 +13,7 @@ public class TruckEntityDTO {
     private double price;
     private TruckTypeEnum truckType;
     private int loadCapacity;
-    private CityEnum city;
+
 
 
     public String getName() {
@@ -89,11 +88,4 @@ public class TruckEntityDTO {
         this.loadCapacity = loadCapacity;
     }
 
-    public CityEnum getCity() {
-        return city;
-    }
-
-    public void setCity(CityEnum city) {
-        this.city = city;
-    }
 }
