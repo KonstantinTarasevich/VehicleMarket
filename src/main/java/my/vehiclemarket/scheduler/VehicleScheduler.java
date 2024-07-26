@@ -1,9 +1,9 @@
 package my.vehiclemarket.scheduler;
 
-import my.vehiclemarket.repos.BoatRepository;
-import my.vehiclemarket.repos.CarRepository;
-import my.vehiclemarket.repos.MotorcycleRepository;
-import my.vehiclemarket.repos.TruckRepository;
+import my.vehiclemarket.repository.BoatRepository;
+import my.vehiclemarket.repository.CarRepository;
+import my.vehiclemarket.repository.MotorcycleRepository;
+import my.vehiclemarket.repository.TruckRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

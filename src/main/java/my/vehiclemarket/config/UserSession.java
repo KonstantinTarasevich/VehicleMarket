@@ -1,7 +1,7 @@
 package my.vehiclemarket.config;
 
 import my.vehiclemarket.model.entity.UserEntity;
-import my.vehiclemarket.repos.UserRepository;
+import my.vehiclemarket.repository.UserRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

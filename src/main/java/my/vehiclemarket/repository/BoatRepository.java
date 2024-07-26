@@ -1,4 +1,4 @@
-package my.vehiclemarket.repos;
+package my.vehiclemarket.repository;
 
 import my.vehiclemarket.model.entity.BoatEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,6 +1,6 @@
-package my.vehiclemarket.repos;
+package my.vehiclemarket.repository;
 
-import my.vehiclemarket.model.entity.MotorcycleEntity;
+import my.vehiclemarket.model.entity.TruckEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface MotorcycleRepository extends JpaRepository<MotorcycleEntity, Long> {
+public interface TruckRepository extends JpaRepository<TruckEntity, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE MotorcycleEntity m SET m.daysActive = m.daysActive + 1")
+    @Query("UPDATE TruckEntity t SET t.daysActive = t.daysActive + 1")
     void incrementDaysActiveForAll();
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MotorcycleEntity m WHERE m.daysActive > 60")
+    @Query("DELETE FROM TruckEntity t WHERE t.daysActive > 60")
     void deleteVehiclesWithDaysActiveGreaterThan(int i);
 }

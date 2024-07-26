@@ -16,12 +16,6 @@ public class MotorcycleController {
         this.motorcycleService = motorcycleService;
     }
 
-    @GetMapping
-    public String listMotorcycles(Model model) {
-        model.addAttribute("motorcycles", motorcycleService.findAll());
-        return "list-motorcycles";
-    }
-
     @GetMapping("/add")
     public String addMotorcycleForm(Model model) {
         model.addAttribute("motorcycle", new MotorcycleEntityDTO());

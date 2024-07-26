@@ -2,7 +2,7 @@ package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.UserEntityDTO;
 import my.vehiclemarket.model.entity.UserEntity;
-import my.vehiclemarket.repos.UserRepository;
+import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

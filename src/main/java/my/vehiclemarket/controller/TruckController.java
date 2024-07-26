@@ -16,12 +16,6 @@ public class TruckController {
         this.truckService = truckService;
     }
 
-    @GetMapping
-    public String listTrucks(Model model) {
-        model.addAttribute("trucks", truckService.findAll());
-        return "list-trucks";
-    }
-
     @GetMapping("/add")
     public String addTruckForm(Model model) {
         model.addAttribute("truck", new TruckEntityDTO());

@@ -20,28 +20,28 @@ public class HomeController {
         return "add-vehicle";
     }
 
-    @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        model.addAttribute("title", "Login");
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("title", "Register");
-        return "register";
-    }
-
-    @GetMapping("/profile")
-    public String showProfilePage(Model model) {
-        model.addAttribute("title", "Profile");
-        return "profile";
-    }
-
     @GetMapping("/cars")
     public String showCarsPage(Model model) {
         model.addAttribute("title", "Cars");
         return "cars";
+    }
+
+    @GetMapping("/boats")
+    public String showBoatsPage(Model model) {
+        model.addAttribute("title", "Boats");
+        return "boats";
+    }
+
+    @GetMapping("/trucks")
+    public String showTrucksPage(Model model) {
+        model.addAttribute("title", "Trucks");
+        return "trucks";
+    }
+
+    @GetMapping("/motorcycles")
+    public String showMotorcyclesPage(Model model) {
+        model.addAttribute("title", "Motorcycles");
+        return "motorcycles";
     }
 
 }

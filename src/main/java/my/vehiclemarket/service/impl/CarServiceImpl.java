@@ -6,11 +6,10 @@ import my.vehiclemarket.model.entity.CarEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.model.enums.EngineTypeEnum;
 import my.vehiclemarket.model.enums.TransmissionTypeEnum;
-import my.vehiclemarket.repos.CarRepository;
-import my.vehiclemarket.repos.UserRepository;
+import my.vehiclemarket.repository.CarRepository;
+import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.service.CarService;
 import org.modelmapper.ModelMapper;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

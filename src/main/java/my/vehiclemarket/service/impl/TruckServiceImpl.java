@@ -2,7 +2,7 @@ package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.TruckEntityDTO;
 import my.vehiclemarket.model.entity.TruckEntity;
-import my.vehiclemarket.repos.TruckRepository;
+import my.vehiclemarket.repository.TruckRepository;
 import my.vehiclemarket.service.TruckService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
