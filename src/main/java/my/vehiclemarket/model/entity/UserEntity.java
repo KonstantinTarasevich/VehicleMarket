@@ -26,7 +26,8 @@ public class UserEntity extends BaseEntity {
     private String phone;
 
     @Column(nullable = false)
-    private RolesEnum Role;
+    @Enumerated(EnumType.STRING)
+    private RolesEnum role;
 
     @OneToMany(mappedBy = "owner")
     private List<CarEntity> addedCars;
@@ -167,11 +168,11 @@ public class UserEntity extends BaseEntity {
     }
 
     public RolesEnum getRole() {
-        return Role;
+        return role;
     }
 
     public UserEntity setRole(RolesEnum role) {
-        Role = role;
+        this.role = role;
         return this;
     }
 

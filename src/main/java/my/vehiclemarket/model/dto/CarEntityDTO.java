@@ -1,6 +1,5 @@
 package my.vehiclemarket.model.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import my.vehiclemarket.model.enums.*;

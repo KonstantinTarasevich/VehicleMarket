@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Car</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    <link href="/css/styles.css" rel="stylesheet">
+
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-5">
 
     <form class="welcome add-offer-form"
@@ -71,14 +67,14 @@
         <div class="form-group">
             <label for="image" class="h4 mb-2">Image URL</label>
             <small class="form-text text-muted">Enter the URL for the car's image.</small>
-            <textarea
+            <input
                     type="text"
                     class="form-control"
                     id="image"
                     name="image"
                     th:field="*{imageURL}"
                     th:errorclass="'is-invalid alert-danger'"
-            ></textarea>
+            >
             <small th:each="error: ${#fields.errors('imageURL')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
@@ -126,14 +122,14 @@
         <div class="form-group" id="fuelConsumptionField">
             <label for="fuelConsumption" class="h4 mb-2">Fuel Consumption</label>
             <small class="form-text text-muted">Enter the car's fuel consumption in liters per 100 km.</small>
-            <textarea
+            <input
                     type="text"
                     class="form-control"
                     id="fuelConsumption"
                     name="fuelConsumption"
                     th:field="*{fuelConsumption}"
                     th:errorclass="'is-invalid alert-danger'"
-            ></textarea>
+            >
             <small th:each="error: ${#fields.errors('fuelConsumption')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
@@ -159,14 +155,14 @@
         <div class="form-group">
             <label for="horsePower" class="h4 mb-2">Horse Power</label>
             <small class="form-text text-muted">Enter the car's horsepower (hp).</small>
-            <textarea
+            <input
                     type="text"
                     class="form-control"
                     id="horsePower"
                     name="horsePower"
                     th:field="*{horsePower}"
                     th:errorclass="'is-invalid alert-danger'"
-            ></textarea>
+            >
             <small th:each="error: ${#fields.errors('horsePower')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
@@ -174,14 +170,14 @@
         <div class="form-group">
             <label for="productionYear" class="h4 mb-2">Production Year</label>
             <small class="form-text text-muted">Enter the car's production year.</small>
-            <textarea
+            <input
                     type="text"
                     class="form-control"
                     id="productionYear"
                     name="productionYear"
                     th:field="*{productionYear}"
                     th:errorclass="'is-invalid alert-danger'"
-            ></textarea>
+            >
             <small th:each="error: ${#fields.errors('productionYear')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
         <!-- Description Field -->
@@ -203,20 +199,16 @@
         <div class="form-group">
             <label for="price" class="h4 mb-2">Price</label>
             <small class="form-text text-muted">Enter the price of the car in USD.</small>
-            <textarea
+            <input
                     type="text"
                     class="form-control"
                     id="price"
                     name="price"
                     th:field="*{price}"
                     th:errorclass="'is-invalid alert-danger'"
-            ></textarea>
+            >
             <small th:each="error: ${#fields.errors('price')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
-
-
-
-
 
         <!-- Submit Button -->
         <div class="form-group">
@@ -227,7 +219,7 @@
     </form>
 
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -245,7 +237,6 @@
             }
         });
 
-        // Trigger the change event on page load to handle pre-selected values
         engineTypeSelect.dispatchEvent(new Event('change'));
     });
 </script>

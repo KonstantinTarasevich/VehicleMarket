@@ -10,11 +10,11 @@ h1 {
     padding-top: 20px;
 }
 
-footer {
+.footer {
     background-color: #8eb4e3;
     padding: 20px 0;
     text-align: center;
-    position: absolute;
+    position: page;
     bottom: 0;
     width: 100%;
 }
