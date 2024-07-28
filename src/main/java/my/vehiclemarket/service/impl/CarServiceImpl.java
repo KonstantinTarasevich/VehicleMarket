@@ -1,6 +1,5 @@
 package my.vehiclemarket.service.impl;
 
-import my.vehiclemarket.config.UserSession;
 import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.model.entity.CarEntity;
 import my.vehiclemarket.model.entity.UserEntity;
@@ -22,13 +21,13 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final UserSession userSession;
 
-    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelMapper modelMapper, UserSession userSession) {
+
+    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.userSession = userSession;
+
     }
 
     public List<CarEntityDTO> findAll() {
@@ -43,38 +42,38 @@ public class CarServiceImpl implements CarService {
     }
 
     public boolean save(CarEntityDTO data) {
-        if (!userSession.isLoggedIn()) {
-            return false;
-        }
-
-        Optional<UserEntity> byId = userRepository.findById(userSession.id());
-
-        if (byId.isEmpty()) {
-            return false;
-        }
-
-        CarEntity car = new CarEntity();
-        car.setName(data.getName());
-        car.setBrand(data.getBrand());
-        car.setImageURL(data.getImageURL());
-        car.setModel(data.getModel());
-        car.setPrice(data.getPrice());
-        car.setCarType(data.getCarType());
-        car.setOwner(byId.get());
-        car.setEngineType(data.getEngineType());
-        car.setHorsePower(data.getHorsePower());
-        car.setCarType(data.getCarType());
-        car.setDescription(data.getDescription());
-        car.setProductionYear(data.getProductionYear());
-        car.setDaysActive(0);
-        if (car.getEngineType().equals(EngineTypeEnum.ELECTRIC)){
-            car.setFuelConsumption(0);
-            car.setTransmissionType(TransmissionTypeEnum.AUTOMATIC);
-        }
-        car.setTransmissionType(data.getTransmissionType());
-        car.setFuelConsumption(data.getFuelConsumption());
-
-        carRepository.save(car);
+////        if (!userSession.isLoggedIn()) {
+////            return false;
+////        }
+////
+////        Optional<UserEntity> byId = userRepository.findById(userSession.id());
+//
+//        if (byId.isEmpty()) {
+//            return false;
+//        }
+//
+//        CarEntity car = new CarEntity();
+//        car.setName(data.getName());
+//        car.setBrand(data.getBrand());
+//        car.setImageURL(data.getImageURL());
+//        car.setModel(data.getModel());
+//        car.setPrice(data.getPrice());
+//        car.setCarType(data.getCarType());
+//        car.setOwner(byId.get());
+//        car.setEngineType(data.getEngineType());
+//        car.setHorsePower(data.getHorsePower());
+//        car.setCarType(data.getCarType());
+//        car.setDescription(data.getDescription());
+//        car.setProductionYear(data.getProductionYear());
+//        car.setDaysActive(0);
+//        if (car.getEngineType().equals(EngineTypeEnum.ELECTRIC)){
+//            car.setFuelConsumption(0);
+//            car.setTransmissionType(TransmissionTypeEnum.AUTOMATIC);
+//        }
+//        car.setTransmissionType(data.getTransmissionType());
+//        car.setFuelConsumption(data.getFuelConsumption());
+//
+//        carRepository.save(car);
 
         return true;
     }

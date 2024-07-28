@@ -16,6 +16,13 @@ public class BoatController {
         this.boatService = boatService;
     }
 
+    @GetMapping("/boats")
+    public String showBoatsPage(Model model) {
+        model.addAttribute("title", "Boats");
+        return "boats";
+    }
+//
+
     @GetMapping("/add")
     public String addBoatForm(Model model) {
         model.addAttribute("boat", new BoatEntityDTO());

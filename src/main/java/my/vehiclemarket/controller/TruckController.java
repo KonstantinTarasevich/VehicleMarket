@@ -16,6 +16,12 @@ public class TruckController {
         this.truckService = truckService;
     }
 
+    @GetMapping("/trucks")
+    public String showTrucksPage(Model model) {
+        model.addAttribute("title", "Trucks");
+        return "trucks";
+    }
+//
     @GetMapping("/add")
     public String addTruckForm(Model model) {
         model.addAttribute("truck", new TruckEntityDTO());

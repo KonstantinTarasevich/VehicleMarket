@@ -1,8 +1,12 @@
 package my.vehiclemarket.service.impl;
 
+import my.vehiclemarket.model.UserData;
 import my.vehiclemarket.model.entity.UserEntity;
+import my.vehiclemarket.model.entity.UserRoleEntity;
+import my.vehiclemarket.model.enums.RolesEnum;
 import my.vehiclemarket.repository.UserRepository;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -19,7 +23,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-           return userRepository
+        return userRepository
                 .findByUsername(username)
                 .map(UserDetailsService::map)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username" + username + " not found"));
@@ -27,10 +31,15 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
     private static UserDetails map(UserEntity userEntity) {
-        return User.withUsername(userEntity.getEmail())
-                .password(userEntity.getPassword())
-                .authorities(List.of())
-                .disabled(false)
-                .build();
+        return new UserData(
+                userEntity.getUsername(),
+                userEntity.getPassword(),
+                userEntity.getRoles().stream().map(UserRoleEntity::getRole).map(UserDetailsService::map).toList(),
+                userEntity.getName()
+        );
+    }
+
+    private static GrantedAuthority map(RolesEnum role) {
+        return new SimpleGrantedAuthority("ROLE_" + role);
     }
 }

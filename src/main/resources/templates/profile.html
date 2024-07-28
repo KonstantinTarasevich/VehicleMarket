@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,9 @@
         <div>
             <button class="btn btn-primary" onclick="window.location.href='/edit-profile'">Edit Profile</button>
             <button class="btn btn-danger" onclick="deleteProfile()">Delete Profile</button>
+            <a class="btn-link" href="/admin-panel"
+                    sec:authorize="hasRole('ADMIN')"
+                    th:classappend="${activeLink == 'admin-panel'} ? 'active'">Admin Panel</a>
         </div>
         <div class="form-group">
             <label for="vehicleTypeSelector">Select Vehicle Type:</label>

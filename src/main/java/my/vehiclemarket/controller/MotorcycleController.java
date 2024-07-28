@@ -16,6 +16,12 @@ public class MotorcycleController {
         this.motorcycleService = motorcycleService;
     }
 
+    @GetMapping("/motorcycles")
+    public String showMotorcyclesPage(Model model) {
+        model.addAttribute("title", "Motorcycles");
+        return "motorcycles";
+    }
+//
     @GetMapping("/add")
     public String addMotorcycleForm(Model model) {
         model.addAttribute("motorcycle", new MotorcycleEntityDTO());

@@ -25,6 +25,12 @@ public class CarController {
         return new CarEntityDTO();
     }
 
+    @GetMapping("/cars")
+    public String showCarsPage(Model model) {
+        model.addAttribute("title", "Cars");
+        return "cars";
+    }
+
     @GetMapping("/add-car")
     public String addCarForm() {
         return "add-car";

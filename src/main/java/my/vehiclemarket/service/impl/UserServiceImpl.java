@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
         user.setPhone(data.getPhone());
         user.setName(data.getName());
         user.setPassword(passwordEncoder.encode(data.getPassword()));
-        user.setRole(RolesEnum.USER_ROLE);
+        
 
         this.userRepository.save(user);
 

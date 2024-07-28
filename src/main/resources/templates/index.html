@@ -10,7 +10,7 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-5">
-    <h1>Welcome to VehicleMarket</h1>
+    <h1>Welcome to VehicleMarket, <th:block th:text="${welcomeMessage}"></th:block></h1>
     <p>Select vehicle type to start:</p>
     <div class="d-flex justify-content-around mt-4">
         <a href="/boats" th:href="@{/boats}" class="btn btn-primary">Boats</a>

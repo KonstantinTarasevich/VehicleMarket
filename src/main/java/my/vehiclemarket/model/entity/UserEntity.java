@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-    @Column(nullable = false, name = "first_name")
+    @Column(nullable = false, name = "full_name")
     private String name;
 
     @Column(unique = true, nullable = false)
@@ -25,9 +25,12 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private RolesEnum role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<UserRoleEntity> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner")
     private List<CarEntity> addedCars;
@@ -167,12 +170,12 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public RolesEnum getRole() {
-        return role;
+    public List<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public UserEntity setRole(RolesEnum role) {
-        this.role = role;
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 
