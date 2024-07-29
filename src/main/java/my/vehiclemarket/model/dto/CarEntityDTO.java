@@ -18,7 +18,6 @@ public class CarEntityDTO {
     @NotNull(message = "Image URL cannot be empty")
     private String imageURL;
 
-    @NotNull(message = "Fuel Consumption cannot be empty")
     private double fuelConsumption;
 
     @NotNull(message = "Description cannot be empty")
@@ -28,7 +27,6 @@ public class CarEntityDTO {
     @Positive(message = "Price must be a positive number")
     private Double price;
 
-    @NotNull(message = "Transmission Type cannot be empty")
     private TransmissionTypeEnum transmissionType;
 
     @NotNull(message = "Car Type cannot be empty")

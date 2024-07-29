@@ -1,10 +1,14 @@
 package my.vehiclemarket.controller;
 
+import jakarta.validation.Valid;
+import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.service.impl.BoatServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.BoatEntityDTO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/boats")
@@ -16,33 +20,41 @@ public class BoatController {
         this.boatService = boatService;
     }
 
+    @ModelAttribute("boatData")
+    public BoatEntityDTO boatDTO() {
+        return new BoatEntityDTO();
+    }
+
     @GetMapping("/boats")
-    public String showBoatsPage(Model model) {
-        model.addAttribute("title", "Boats");
+    public String showBoatsPage() {
         return "boats";
     }
-//
 
-    @GetMapping("/add")
-    public String addBoatForm(Model model) {
-        model.addAttribute("boat", new BoatEntityDTO());
+    @GetMapping("/add-boat")
+    public String addBoatForm() {
         return "add-boat";
     }
 
-    @PostMapping("/add")
-    public String addBoat(@ModelAttribute BoatEntityDTO boatDTO) {
-        boatService.save(boatDTO);
-        return "redirect:/boats";
-    }
+    @PostMapping("/add-boat")
+    public String addBoat(
+            @Valid BoatEntityDTO data,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("boatData", data);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.carData", bindingResult);
 
-    @GetMapping("/edit/{id}")
-    public String editBoatForm(@PathVariable Long id, Model model) {
-        BoatEntityDTO boatDTO = boatService.findById(id);
-        if (boatDTO != null) {
-            model.addAttribute("boat", boatDTO);
-            return "edit-boat";
+            return "redirect:/boats/add-boat";
         }
-        return "redirect:/boats";
+
+        boolean success = boatService.save(data);
+
+        if (!success) {
+            redirectAttributes.addFlashAttribute("boatData", data);
+            return "redirect:/boats/add-boat";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/edit/{id}")

@@ -22,3 +22,7 @@ h1 {
 .navbar {
     margin-bottom: 20px;
 }
+
+.hidden{
+    display: none;
+}

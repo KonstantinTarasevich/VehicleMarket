@@ -6,6 +6,9 @@ import my.vehiclemarket.model.enums.RolesEnum;
 import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +39,15 @@ public class UserServiceImpl implements UserService{
         UserEntity user = userRepository.findById(id).orElse(null);
         return user != null ? modelMapper.map(user, UserRegisterDTO.class) : null;
     }
+    public String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+    public UserEntity getCurrentUser() {
+        String username = getCurrentUsername();
+        UserEntity user = findUserByUsername(username);
+        return user;
+    }
 
     public boolean register(UserRegisterDTO data) {
         Optional<UserEntity> existingUser = userRepository.findByUsername(data.getUsername());
@@ -50,11 +62,15 @@ public class UserServiceImpl implements UserService{
         user.setPhone(data.getPhone());
         user.setName(data.getName());
         user.setPassword(passwordEncoder.encode(data.getPassword()));
-        
+
 
         this.userRepository.save(user);
 
         return true;
+    }
+    public UserEntity findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found"));
     }
 
 

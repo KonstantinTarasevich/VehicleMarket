@@ -1,7 +1,10 @@
 package my.vehiclemarket.service.impl;
 
+import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
 import my.vehiclemarket.model.dto.TruckEntityDTO;
+import my.vehiclemarket.model.entity.MotorcycleEntity;
 import my.vehiclemarket.model.entity.TruckEntity;
+import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.repository.TruckRepository;
 import my.vehiclemarket.service.TruckService;
 import org.modelmapper.ModelMapper;
@@ -15,10 +18,12 @@ public class TruckServiceImpl implements TruckService {
 
     private final TruckRepository truckRepository;
     private final ModelMapper modelMapper;
+    private final UserServiceImpl userServiceImpl;
 
-    public TruckServiceImpl(TruckRepository truckRepository, ModelMapper modelMapper) {
+    public TruckServiceImpl(TruckRepository truckRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
         this.truckRepository = truckRepository;
         this.modelMapper = modelMapper;
+        this.userServiceImpl = userServiceImpl;
     }
 
     public List<TruckEntityDTO> findAll() {
@@ -27,15 +32,28 @@ public class TruckServiceImpl implements TruckService {
                 .collect(Collectors.toList());
     }
 
-    public TruckEntityDTO findById(Long id) {
-        TruckEntity truck = truckRepository.findById(id).orElse(null);
-        return truck != null ? modelMapper.map(truck, TruckEntityDTO.class) : null;
-    }
+    public boolean save(TruckEntityDTO data) {
 
-    public TruckEntityDTO save(TruckEntityDTO truckDTO) {
-        TruckEntity truck = modelMapper.map(truckDTO, TruckEntity.class);
-        truck = truckRepository.save(truck);
-        return modelMapper.map(truck, TruckEntityDTO.class);
+
+        TruckEntity truck = new TruckEntity();
+        truck.setName(data.getName());
+        truck.setBrand(data.getBrand());
+        truck.setImageURL(data.getImageURL());
+        truck.setModel(data.getModel());
+        truck.setPrice(data.getPrice());
+        truck.setTruckType(data.getTruckType());
+        UserEntity owner = userServiceImpl.getCurrentUser();
+        truck.setOwner(owner);
+        truck.setDescription(data.getDescription());
+        truck.setProductionYear(data.getProductionYear());
+        truck.setDaysActive(0);
+        truck.setFuelConsumption(data.getFuelConsumption());
+        truck.setLoadCapacity(data.getLoadCapacity());
+
+        truckRepository.save(truck);
+
+
+        return true;
     }
 
     public TruckEntityDTO update(Long id, TruckEntityDTO truckDTO) {

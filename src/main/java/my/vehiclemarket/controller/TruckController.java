@@ -1,10 +1,14 @@
 package my.vehiclemarket.controller;
 
+import jakarta.validation.Valid;
+import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.service.impl.TruckServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.TruckEntityDTO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/trucks")
@@ -16,32 +20,40 @@ public class TruckController {
         this.truckService = truckService;
     }
 
+    @ModelAttribute("truckData")
+    public TruckEntityDTO truckDTO() {
+        return new TruckEntityDTO();
+    }
+
     @GetMapping("/trucks")
-    public String showTrucksPage(Model model) {
-        model.addAttribute("title", "Trucks");
+    public String showTrucksPage() {
         return "trucks";
     }
-//
-    @GetMapping("/add")
-    public String addTruckForm(Model model) {
-        model.addAttribute("truck", new TruckEntityDTO());
+    @GetMapping("/add-truck")
+    public String addTruckForm() {
         return "add-truck";
     }
 
-    @PostMapping("/add")
-    public String addTruck(@ModelAttribute TruckEntityDTO truckDTO) {
-        truckService.save(truckDTO);
-        return "redirect:/trucks";
-    }
+    @PostMapping("/add-truck")
+    public String addTruck(
+            @Valid TruckEntityDTO data,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("truckData", data);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.carData", bindingResult);
 
-    @GetMapping("/edit/{id}")
-    public String editTruckForm(@PathVariable Long id, Model model) {
-        TruckEntityDTO truckDTO = truckService.findById(id);
-        if (truckDTO != null) {
-            model.addAttribute("truck", truckDTO);
-            return "edit-truck";
+            return "redirect:/trucks/add-truck";
         }
-        return "redirect:/trucks";
+
+        boolean success = truckService.save(data);
+
+        if (!success) {
+            redirectAttributes.addFlashAttribute("truckData", data);
+            return "redirect:/trucks/add-truck";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/edit/{id}")

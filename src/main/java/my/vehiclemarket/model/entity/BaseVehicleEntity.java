@@ -24,7 +24,7 @@ public abstract class BaseVehicleEntity {
     @Column(nullable = false, name = "image_URL")
     private String imageURL;
 
-    @Column(nullable = false)
+    @Column(nullable = true, name = "fuel_consumption")
     private double fuelConsumption;
 
     @Column(nullable = false)
@@ -80,18 +80,16 @@ public abstract class BaseVehicleEntity {
         return owner;
     }
 
-    public BaseVehicleEntity setOwner(UserEntity owner) {
+    public void setOwner(UserEntity owner) {
         this.owner = owner;
-        return this;
     }
 
     public String getImageURL() {
         return imageURL;
     }
 
-    public BaseVehicleEntity setImageURL(String imageURL) {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
-        return this;
     }
 
     public double getFuelConsumption() {

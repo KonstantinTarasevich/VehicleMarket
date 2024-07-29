@@ -1,14 +1,25 @@
 package my.vehiclemarket.controller;
 
 import jakarta.validation.Valid;
+import my.vehiclemarket.model.UserData;
+import my.vehiclemarket.model.entity.CarEntity;
+import my.vehiclemarket.model.enums.EngineTypeEnum;
+import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 import my.vehiclemarket.service.impl.CarServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.CarEntityDTO;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.security.core.Authentication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cars")
@@ -26,8 +37,7 @@ public class CarController {
     }
 
     @GetMapping("/cars")
-    public String showCarsPage(Model model) {
-        model.addAttribute("title", "Cars");
+    public String showCarsPage() {
         return "cars";
     }
 
@@ -55,7 +65,7 @@ public class CarController {
             redirectAttributes.addFlashAttribute("carData", data);
             return "redirect:/cars/add-car";
         }
-        return "redirect:/cars";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")

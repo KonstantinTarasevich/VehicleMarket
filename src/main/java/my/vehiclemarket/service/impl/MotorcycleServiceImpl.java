@@ -2,6 +2,7 @@ package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
 import my.vehiclemarket.model.entity.MotorcycleEntity;
+import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.repository.MotorcycleRepository;
 import my.vehiclemarket.service.MotorcycleService;
 import org.modelmapper.ModelMapper;
@@ -15,10 +16,12 @@ public class MotorcycleServiceImpl implements MotorcycleService {
 
     private final MotorcycleRepository motorcycleRepository;
     private final ModelMapper modelMapper;
+    private final UserServiceImpl userServiceImpl;
 
-    public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository, ModelMapper modelMapper) {
+    public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
         this.motorcycleRepository = motorcycleRepository;
         this.modelMapper = modelMapper;
+        this.userServiceImpl = userServiceImpl;
     }
 
     public List<MotorcycleEntityDTO> findAll() {
@@ -27,15 +30,27 @@ public class MotorcycleServiceImpl implements MotorcycleService {
                 .collect(Collectors.toList());
     }
 
-    public MotorcycleEntityDTO findById(Long id) {
-        MotorcycleEntity motorcycle = motorcycleRepository.findById(id).orElse(null);
-        return motorcycle != null ? modelMapper.map(motorcycle, MotorcycleEntityDTO.class) : null;
-    }
+    public boolean save(MotorcycleEntityDTO data) {
 
-    public MotorcycleEntityDTO save(MotorcycleEntityDTO motorcycleDTO) {
-        MotorcycleEntity motorcycle = modelMapper.map(motorcycleDTO, MotorcycleEntity.class);
-        motorcycle = motorcycleRepository.save(motorcycle);
-        return modelMapper.map(motorcycle, MotorcycleEntityDTO.class);
+
+        MotorcycleEntity motorcycle = new MotorcycleEntity();
+        motorcycle.setName(data.getName());
+        motorcycle.setBrand(data.getBrand());
+        motorcycle.setImageURL(data.getImageURL());
+        motorcycle.setModel(data.getModel());
+        motorcycle.setPrice(data.getPrice());
+        motorcycle.setHorsePower(data.getHorsePower());
+        UserEntity owner = userServiceImpl.getCurrentUser();
+        motorcycle.setOwner(owner);
+        motorcycle.setDescription(data.getDescription());
+        motorcycle.setProductionYear(data.getProductionYear());
+        motorcycle.setDaysActive(0);
+        motorcycle.setFuelConsumption(data.getFuelConsumption());
+
+        motorcycleRepository.save(motorcycle);
+
+
+        return true;
     }
 
     public MotorcycleEntityDTO update(Long id, MotorcycleEntityDTO motorcycleDTO) {

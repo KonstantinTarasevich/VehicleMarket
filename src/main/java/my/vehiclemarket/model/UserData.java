@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 public class UserData extends User {
+
     private final String fullName;
 
     public UserData(String username,

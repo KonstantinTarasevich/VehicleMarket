@@ -10,7 +10,7 @@ import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 public class CarEntity extends BaseVehicleEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "transmission_type")
+    @Column(nullable = true, name = "transmission_type")
     private TransmissionTypeEnum transmissionType;
 
     @Enumerated(EnumType.STRING)

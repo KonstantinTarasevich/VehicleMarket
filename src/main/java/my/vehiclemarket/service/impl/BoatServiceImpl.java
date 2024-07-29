@@ -1,7 +1,12 @@
 package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.BoatEntityDTO;
+import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.model.entity.BoatEntity;
+import my.vehiclemarket.model.entity.CarEntity;
+import my.vehiclemarket.model.entity.UserEntity;
+import my.vehiclemarket.model.enums.EngineTypeEnum;
+import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 import my.vehiclemarket.repository.BoatRepository;
 import my.vehiclemarket.service.BoatService;
 import org.modelmapper.ModelMapper;
@@ -15,27 +20,35 @@ public class BoatServiceImpl implements BoatService {
 
     private final BoatRepository boatRepository;
     private final ModelMapper modelMapper;
+    private final UserServiceImpl userServiceImpl;
 
-    public BoatServiceImpl(BoatRepository boatRepository, ModelMapper modelMapper) {
+    public BoatServiceImpl(BoatRepository boatRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
         this.boatRepository = boatRepository;
         this.modelMapper = modelMapper;
+        this.userServiceImpl = userServiceImpl;
     }
 
-    public List<BoatEntityDTO> findAll() {
-        return boatRepository.findAll().stream()
-                .map(boat -> modelMapper.map(boat, BoatEntityDTO.class))
-                .collect(Collectors.toList());
-    }
+    public boolean save(BoatEntityDTO data) {
 
-    public BoatEntityDTO findById(Long id) {
-        BoatEntity boat = boatRepository.findById(id).orElse(null);
-        return boat != null ? modelMapper.map(boat, BoatEntityDTO.class) : null;
-    }
 
-    public BoatEntityDTO save(BoatEntityDTO boatDTO) {
-        BoatEntity boat = modelMapper.map(boatDTO, BoatEntity.class);
-        boat = boatRepository.save(boat);
-        return modelMapper.map(boat, BoatEntityDTO.class);
+        BoatEntity boat = new BoatEntity();
+        boat.setName(data.getName());
+        boat.setBrand(data.getBrand());
+        boat.setImageURL(data.getImageURL());
+        boat.setModel(data.getModel());
+        boat.setPrice(data.getPrice());
+        boat.getBoatType(data.getBoatType());
+        UserEntity owner = userServiceImpl.getCurrentUser();
+        boat.setOwner(owner);
+        boat.setDescription(data.getDescription());
+        boat.setProductionYear(data.getProductionYear());
+        boat.setDaysActive(0);
+        boat.setFuelConsumption(data.getFuelConsumption());
+
+        boatRepository.save(boat);
+
+
+        return true;
     }
 
     public BoatEntityDTO update(Long id, BoatEntityDTO boatDTO) {

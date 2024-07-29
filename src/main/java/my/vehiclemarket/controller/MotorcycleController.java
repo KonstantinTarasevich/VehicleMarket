@@ -1,10 +1,14 @@
 package my.vehiclemarket.controller;
 
+import jakarta.validation.Valid;
+import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.service.impl.MotorcycleServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/motorcycles")
@@ -16,32 +20,41 @@ public class MotorcycleController {
         this.motorcycleService = motorcycleService;
     }
 
+    @ModelAttribute("motorcycleData")
+    public MotorcycleEntityDTO motorcycleDTO() {
+        return new MotorcycleEntityDTO();
+    }
+
     @GetMapping("/motorcycles")
-    public String showMotorcyclesPage(Model model) {
-        model.addAttribute("title", "Motorcycles");
+    public String showMotorcyclesPage() {
         return "motorcycles";
     }
-//
+
     @GetMapping("/add")
-    public String addMotorcycleForm(Model model) {
-        model.addAttribute("motorcycle", new MotorcycleEntityDTO());
+    public String addMotorcycleForm() {
         return "add-motorcycle";
     }
 
-    @PostMapping("/add")
-    public String addMotorcycle(@ModelAttribute MotorcycleEntityDTO motorcycleDTO) {
-        motorcycleService.save(motorcycleDTO);
-        return "redirect:/motorcycles";
-    }
+    @PostMapping("/add-motorcycle")
+    public String addMotorcycle(
+            @Valid MotorcycleEntityDTO data,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("motorcycleData", data);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.carData", bindingResult);
 
-    @GetMapping("/edit/{id}")
-    public String editMotorcycleForm(@PathVariable Long id, Model model) {
-        MotorcycleEntityDTO motorcycleDTO = motorcycleService.findById(id);
-        if (motorcycleDTO != null) {
-            model.addAttribute("motorcycle", motorcycleDTO);
-            return "edit-motorcycle";
+            return "redirect:/motorcycles/add-motorcycle";
         }
-        return "redirect:/motorcycles";
+
+        boolean success = motorcycleService.save(data);
+
+        if (!success) {
+            redirectAttributes.addFlashAttribute("motorcycleData", data);
+            return "redirect:/motorcycles/add-motorcycle";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/edit/{id}")
