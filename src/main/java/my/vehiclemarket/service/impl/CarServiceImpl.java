@@ -75,16 +75,6 @@ public class CarServiceImpl implements CarService {
         return true;
     }
 
-    public CarEntityDTO update(Long id, CarEntityDTO carDTO) {
-        CarEntity existingCar = carRepository.findById(id).orElse(null);
-        if (existingCar != null) {
-            modelMapper.map(carDTO, existingCar);
-            existingCar = carRepository.save(existingCar);
-            return modelMapper.map(existingCar, CarEntityDTO.class);
-        }
-        return null;
-    }
-
     public void delete(Long id) {
         carRepository.deleteById(id);
     }

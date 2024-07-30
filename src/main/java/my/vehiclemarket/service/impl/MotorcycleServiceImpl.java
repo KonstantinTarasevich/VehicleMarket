@@ -53,16 +53,6 @@ public class MotorcycleServiceImpl implements MotorcycleService {
         return true;
     }
 
-    public MotorcycleEntityDTO update(Long id, MotorcycleEntityDTO motorcycleDTO) {
-        MotorcycleEntity existingMotorcycle = motorcycleRepository.findById(id).orElse(null);
-        if (existingMotorcycle != null) {
-            modelMapper.map(motorcycleDTO, existingMotorcycle);
-            existingMotorcycle = motorcycleRepository.save(existingMotorcycle);
-            return modelMapper.map(existingMotorcycle, MotorcycleEntityDTO.class);
-        }
-        return null;
-    }
-
     public void delete(Long id) {
         motorcycleRepository.deleteById(id);
     }

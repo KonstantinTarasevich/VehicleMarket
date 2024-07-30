@@ -57,13 +57,7 @@ public class BoatController {
         return "redirect:/";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editBoat(@PathVariable Long id, @ModelAttribute BoatEntityDTO boatDTO) {
-        boatService.update(id, boatDTO);
-        return "redirect:/boats";
-    }
-
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteBoat(@PathVariable Long id) {
         boatService.delete(id);
         return "redirect:/boats";

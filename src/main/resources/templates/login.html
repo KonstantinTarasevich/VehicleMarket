@@ -15,7 +15,6 @@
             class="welcome login"
             th:action="@{/users/login}"
             th:method="POST"
-            th:object="${loginData}"
     >
 
         <div class="form-group">
@@ -26,26 +25,20 @@
                     class="form-control"
                     id="username"
                     name="username"
-                    th:field="*{username}"
-                    th:errorclass="'is-invalid alert-danger'"
+                    placeholder="Username"
             />
-            <small th:each="error: ${#fields.errors('username')}" th:text="${error}" class="invalid-feedback text-danger"></small>
-            <small class="invalid-feedback text-danger"></small>
         </div>
 
         <div class="form-group">
                 <label for="password" class="h3 mb-2">Password</label>
                 <small class="form-text text-muted">Enter your Password.</small>
             <input
-                    type="password"
-                    class="form-control"
                     id="password"
                     name="password"
-                    th:field="*{password}"
-                    th:errorclass="'is-invalid alert-danger'"
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
             />
-            <small th:each="error: ${#fields.errors('password')}" th:text="${error}" class="invalid-feedback text-danger"></small>
-            <small class="invalid-feedback text-danger"></small>
         </div>
 
         <div class="form-group">

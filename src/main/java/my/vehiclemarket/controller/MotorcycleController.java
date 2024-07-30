@@ -57,13 +57,7 @@ public class MotorcycleController {
         return "redirect:/";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editMotorcycle(@PathVariable Long id, @ModelAttribute MotorcycleEntityDTO motorcycleDTO) {
-        motorcycleService.update(id, motorcycleDTO);
-        return "redirect:/motorcycles";
-    }
-
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteMotorcycle(@PathVariable Long id) {
         motorcycleService.delete(id);
         return "redirect:/motorcycles";

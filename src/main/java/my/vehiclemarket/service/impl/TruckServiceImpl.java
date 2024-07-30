@@ -56,16 +56,6 @@ public class TruckServiceImpl implements TruckService {
         return true;
     }
 
-    public TruckEntityDTO update(Long id, TruckEntityDTO truckDTO) {
-        TruckEntity existingTruck = truckRepository.findById(id).orElse(null);
-        if (existingTruck != null) {
-            modelMapper.map(truckDTO, existingTruck);
-            existingTruck = truckRepository.save(existingTruck);
-            return modelMapper.map(existingTruck, TruckEntityDTO.class);
-        }
-        return null;
-    }
-
     public void delete(Long id) {
         truckRepository.deleteById(id);
     }

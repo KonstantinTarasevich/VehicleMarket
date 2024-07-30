@@ -51,16 +51,6 @@ public class BoatServiceImpl implements BoatService {
         return true;
     }
 
-    public BoatEntityDTO update(Long id, BoatEntityDTO boatDTO) {
-        BoatEntity existingBoat = boatRepository.findById(id).orElse(null);
-        if (existingBoat != null) {
-            modelMapper.map(boatDTO, existingBoat);
-            existingBoat = boatRepository.save(existingBoat);
-            return modelMapper.map(existingBoat, BoatEntityDTO.class);
-        }
-        return null;
-    }
-
     public void delete(Long id) {
         boatRepository.deleteById(id);
     }

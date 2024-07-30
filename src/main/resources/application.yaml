@@ -38,9 +38,3 @@ spring:
     resources:
       static-locations: classpath:/static/
 
-  forex:
-    api:
-      key: ${FOREX_API_KEY:}
-      url: "https://openexchangerates.org/api/latest.json?app_id={app_id}&symbols=EUR%2CBGN&show_alternative=false"
-      base: "USD
-      "

@@ -56,13 +56,7 @@ public class TruckController {
         return "redirect:/";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editTruck(@PathVariable Long id, @ModelAttribute TruckEntityDTO truckDTO) {
-        truckService.update(id, truckDTO);
-        return "redirect:/trucks";
-    }
-
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteTruck(@PathVariable Long id) {
         truckService.delete(id);
         return "redirect:/trucks";

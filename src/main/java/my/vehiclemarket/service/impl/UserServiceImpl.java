@@ -73,17 +73,6 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found"));
     }
 
-
-    public UserRegisterDTO update(Long id, UserRegisterDTO userDTO) {
-        UserEntity existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            modelMapper.map(userDTO, existingUser);
-            existingUser = userRepository.save(existingUser);
-            return modelMapper.map(existingUser, UserRegisterDTO.class);
-        }
-        return null;
-    }
-
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
