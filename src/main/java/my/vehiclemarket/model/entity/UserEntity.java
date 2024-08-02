@@ -1,7 +1,6 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
-import my.vehiclemarket.model.enums.RolesEnum;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -45,32 +45,18 @@ public class CarServiceImpl implements CarService {
     }
 
     public boolean save(CarEntityDTO data) {
+        CarEntity car = modelMapper.map(data, CarEntity.class);
 
-
-        CarEntity car = new CarEntity();
-        car.setName(data.getName());
-        car.setBrand(data.getBrand());
-        car.setImageURL(data.getImageURL());
-        car.setModel(data.getModel());
-        car.setPrice(data.getPrice());
-        car.setCarType(data.getCarType());
         UserEntity owner = userServiceImpl.getCurrentUser();
         car.setOwner(owner);
-        car.setEngineType(data.getEngineType());
-        car.setHorsePower(data.getHorsePower());
-        car.setCarType(data.getCarType());
-        car.setDescription(data.getDescription());
-        car.setProductionYear(data.getProductionYear());
         car.setDaysActive(0);
-        if (car.getEngineType().equals(EngineTypeEnum.ELECTRIC)){
+
+        if (car.getEngineType().equals(EngineTypeEnum.ELECTRIC)) {
             car.setFuelConsumption(0);
             car.setTransmissionType(TransmissionTypeEnum.AUTOMATIC);
         }
-        car.setTransmissionType(data.getTransmissionType());
-        car.setFuelConsumption(data.getFuelConsumption());
 
         carRepository.save(car);
-
 
         return true;
     }

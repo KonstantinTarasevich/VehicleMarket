@@ -30,7 +30,7 @@ public class MotorcycleController {
         return "motorcycles";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add-motorcycle")
     public String addMotorcycleForm() {
         return "add-motorcycle";
     }

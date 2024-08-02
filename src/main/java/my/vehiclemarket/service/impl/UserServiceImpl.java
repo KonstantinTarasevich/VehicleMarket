@@ -56,18 +56,15 @@ public class UserServiceImpl implements UserService{
             return false;
         }
 
-        UserEntity user = new UserEntity();
-        user.setUsername(data.getUsername());
-        user.setEmail(data.getEmail());
-        user.setPhone(data.getPhone());
-        user.setName(data.getName());
-        user.setPassword(passwordEncoder.encode(data.getPassword()));
+        UserEntity user = modelMapper.map(data, UserEntity.class);
 
+        user.setPassword(passwordEncoder.encode(data.getPassword()));
 
         this.userRepository.save(user);
 
         return true;
     }
+
     public UserEntity findUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found"));

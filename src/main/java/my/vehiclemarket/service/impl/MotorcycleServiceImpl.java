@@ -31,24 +31,13 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     public boolean save(MotorcycleEntityDTO data) {
+        MotorcycleEntity motorcycle = modelMapper.map(data, MotorcycleEntity.class);
 
-
-        MotorcycleEntity motorcycle = new MotorcycleEntity();
-        motorcycle.setName(data.getName());
-        motorcycle.setBrand(data.getBrand());
-        motorcycle.setImageURL(data.getImageURL());
-        motorcycle.setModel(data.getModel());
-        motorcycle.setPrice(data.getPrice());
-        motorcycle.setHorsePower(data.getHorsePower());
         UserEntity owner = userServiceImpl.getCurrentUser();
         motorcycle.setOwner(owner);
-        motorcycle.setDescription(data.getDescription());
-        motorcycle.setProductionYear(data.getProductionYear());
         motorcycle.setDaysActive(0);
-        motorcycle.setFuelConsumption(data.getFuelConsumption());
 
         motorcycleRepository.save(motorcycle);
-
 
         return true;
     }

@@ -68,6 +68,14 @@
             <small th:each="error: ${#fields.errors('boatType')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
+        <!-- Production Year Field -->
+        <div class="form-group">
+            <label for="productionYear" class="h4 mb-2">Production Year</label>
+            <small class="form-text text-muted">Enter the boat's production year.</small>
+            <input type="text" class="form-control" id="productionYear" name="productionYear" th:field="*{productionYear}" th:errorclass="'is-invalid alert-danger'"/>
+            <small th:each="error: ${#fields.errors('productionYear')}" th:text="${error}" class="invalid-feedback text-danger"></small>
+        </div>
+
         <!-- Fuel Consumption Field -->
         <div class="form-group">
             <label for="fuelConsumption" class="h4 mb-2">Fuel Consumption</label>
@@ -92,13 +100,7 @@
             <small th:each="error: ${#fields.errors('price')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
-        <!-- Production Year Field -->
-        <div class="form-group">
-            <label for="productionYear" class="h4 mb-2">Production Year</label>
-            <small class="form-text text-muted">Enter the boat's production year.</small>
-            <input type="text" class="form-control" id="productionYear" name="productionYear" th:field="*{productionYear}" th:errorclass="'is-invalid alert-danger'"/>
-            <small th:each="error: ${#fields.errors('productionYear')}" th:text="${error}" class="invalid-feedback text-danger"></small>
-        </div>
+
 
         <!-- Submit Button -->
         <div class="form-group">

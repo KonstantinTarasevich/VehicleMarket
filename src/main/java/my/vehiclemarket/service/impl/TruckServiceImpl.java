@@ -33,28 +33,17 @@ public class TruckServiceImpl implements TruckService {
     }
 
     public boolean save(TruckEntityDTO data) {
+        TruckEntity truck = modelMapper.map(data, TruckEntity.class);
 
-
-        TruckEntity truck = new TruckEntity();
-        truck.setName(data.getName());
-        truck.setBrand(data.getBrand());
-        truck.setImageURL(data.getImageURL());
-        truck.setModel(data.getModel());
-        truck.setPrice(data.getPrice());
-        truck.setTruckType(data.getTruckType());
         UserEntity owner = userServiceImpl.getCurrentUser();
         truck.setOwner(owner);
-        truck.setDescription(data.getDescription());
-        truck.setProductionYear(data.getProductionYear());
         truck.setDaysActive(0);
-        truck.setFuelConsumption(data.getFuelConsumption());
-        truck.setLoadCapacity(data.getLoadCapacity());
 
         truckRepository.save(truck);
 
-
         return true;
     }
+
 
     public void delete(Long id) {
         truckRepository.deleteById(id);

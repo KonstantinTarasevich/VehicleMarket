@@ -31,22 +31,13 @@ public class BoatServiceImpl implements BoatService {
     public boolean save(BoatEntityDTO data) {
 
 
-        BoatEntity boat = new BoatEntity();
-        boat.setName(data.getName());
-        boat.setBrand(data.getBrand());
-        boat.setImageURL(data.getImageURL());
-        boat.setModel(data.getModel());
-        boat.setPrice(data.getPrice());
-        boat.getBoatType(data.getBoatType());
+        BoatEntity boat = modelMapper.map(data, BoatEntity.class);
+
         UserEntity owner = userServiceImpl.getCurrentUser();
         boat.setOwner(owner);
-        boat.setDescription(data.getDescription());
-        boat.setProductionYear(data.getProductionYear());
         boat.setDaysActive(0);
-        boat.setFuelConsumption(data.getFuelConsumption());
 
         boatRepository.save(boat);
-
 
         return true;
     }
