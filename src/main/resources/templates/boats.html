@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +28,11 @@
             </ul>
             <div class="card-body">
                 <a class="card-link" th:href="@{/boats/{id}(id=*{id})}">Details</a>
+            </div>
+            <div sec:authorize="hasRole('ADMIN')">
+                <form th:action="@{boats/delete/{id}(id=*{id})}" th:method="DELETE" onsubmit="return confirm('Are you sure you want to delete this boat?');">
+                    <button  type="submit" class="btn btn-danger">Delete Boat</button>
+                </form>
             </div>
         </div>
     </div>

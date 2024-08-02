@@ -1,3 +1,10 @@
+openexchangerates:
+  app_id: a16352c0c0d240f3b845a89e73a2c238
+  url: https://openexchangerates.org/api/latest.json
+
+server:
+  port: 8081
+
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver

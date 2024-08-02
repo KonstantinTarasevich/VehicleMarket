@@ -15,7 +15,10 @@
 
     <div class="d-flex justify-content-between mb-3">
         <div>
-            <button class="btn btn-danger" onclick="deleteProfile()">Delete Profile</button>
+            <form th:action="@{/users/delete/{id}(id=${id})}" th:method="DELETE" onsubmit="return confirm('Are you sure you want to delete this user?');"
+            >
+                <button type="submit" class="btn btn-danger">Delete User</button>
+            </form>
             <a class="btn-link" href="/admin-panel"
                     sec:authorize="hasRole('ADMIN')"
                     th:classappend="${activeLink == 'admin-panel'} ? 'active'">Admin Panel</a>

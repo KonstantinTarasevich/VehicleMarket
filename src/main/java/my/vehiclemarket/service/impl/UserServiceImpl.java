@@ -1,8 +1,10 @@
 package my.vehiclemarket.service.impl;
 
+import my.vehiclemarket.model.dto.UserDetailsDTO;
 import my.vehiclemarket.model.dto.UserRegisterDTO;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.model.entity.UserRoleEntity;
+import my.vehiclemarket.model.enums.RolesEnum;
 import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.repository.UserRoleRepository;
 import my.vehiclemarket.service.UserService;
@@ -80,7 +82,27 @@ public class UserServiceImpl implements UserService{
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(getCurrentUser().getId());
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserDetailsDTO> getAllUserDetails() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(UserServiceImpl::toUserDetails)
+                .toList();
+    }
+
+    private static UserDetailsDTO toUserDetails(UserEntity userEntity) {
+        return new UserDetailsDTO(
+                userEntity.getId(),
+                userEntity.getName(),
+                userEntity.getUsername(),
+                userEntity.getEmail(),
+                userEntity.getPhone()
+        );
+
     }
 
 }
