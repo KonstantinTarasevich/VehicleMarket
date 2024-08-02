@@ -1,7 +1,6 @@
 package my.vehiclemarket.controller;
 
 import jakarta.validation.Valid;
-import my.vehiclemarket.model.dto.CarEntityDTO;
 import my.vehiclemarket.service.impl.BoatServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +24,17 @@ public class BoatController {
         return new BoatEntityDTO();
     }
 
-    @GetMapping("/boats")
-    public String showBoatsPage() {
+    @GetMapping()
+    public String showBoatsPage(Model model) {
+        model.addAttribute("allBoats", boatService.getAllBoatsSummary());
         return "boats";
+    }
+
+    @GetMapping("/{id}")
+    public String boatDetails(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("boatDetails", boatService.getBoatDetails(id));
+
+        return "boat-details";
     }
 
     @GetMapping("/add-boat")

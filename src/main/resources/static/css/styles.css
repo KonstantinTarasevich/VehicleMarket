@@ -1,5 +1,7 @@
 body {
     font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
 }
 
 h1 {
@@ -11,11 +13,13 @@ h1 {
 }
 
 .footer {
+    position: page;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #8eb4e3;
     padding: 20px 0;
     text-align: center;
-    position: page;
-    bottom: 0;
     width: 100%;
 }
 

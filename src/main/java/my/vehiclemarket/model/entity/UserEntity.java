@@ -40,25 +40,12 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "owner")
     private List<TruckEntity> addedTrucks;
 
-    @ManyToMany()
-    private List<CarEntity> favouriteCars;
-    @ManyToMany()
-    private List<BoatEntity> favouriteBoats;
-    @ManyToMany()
-    private List<MotorcycleEntity> favouriteMotorcycles;
-    @ManyToMany()
-    private List<TruckEntity> favouriteTrucks;
-
 
     public UserEntity() {
         this.addedCars = new ArrayList<>();
         this.addedBoats = new ArrayList<>();
         this.addedMotorcycles = new ArrayList<>();
         this.addedTrucks = new ArrayList<>();
-        this.favouriteCars = new ArrayList<>();
-        this.favouriteBoats = new ArrayList<>();
-        this.favouriteMotorcycles = new ArrayList<>();
-        this.favouriteTrucks = new ArrayList<>();
     }
 
     public String getName() {
@@ -130,42 +117,6 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setAddedTrucks(List<TruckEntity> addedTrucks) {
         this.addedTrucks = addedTrucks;
-        return this;
-    }
-
-    public List<CarEntity> getFavouriteCars() {
-        return favouriteCars;
-    }
-
-    public UserEntity setFavouriteCars(List<CarEntity> favouriteCars) {
-        this.favouriteCars = favouriteCars;
-        return this;
-    }
-
-    public List<BoatEntity> getFavouriteBoats() {
-        return favouriteBoats;
-    }
-
-    public UserEntity setFavouriteBoats(List<BoatEntity> favouriteBoats) {
-        this.favouriteBoats = favouriteBoats;
-        return this;
-    }
-
-    public List<MotorcycleEntity> getFavouriteMotorcycles() {
-        return favouriteMotorcycles;
-    }
-
-    public UserEntity setFavouriteMotorcycles(List<MotorcycleEntity> favouriteMotorcycles) {
-        this.favouriteMotorcycles = favouriteMotorcycles;
-        return this;
-    }
-
-    public List<TruckEntity> getFavouriteTrucks() {
-        return favouriteTrucks;
-    }
-
-    public UserEntity setFavouriteTrucks(List<TruckEntity> favouriteTrucks) {
-        this.favouriteTrucks = favouriteTrucks;
         return this;
     }
 

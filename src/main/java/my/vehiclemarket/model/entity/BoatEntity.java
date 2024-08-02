@@ -11,7 +11,7 @@ public class BoatEntity extends BaseVehicleEntity {
     @Column(nullable = false, name = "boat_type")
     private BoatTypeEnum boatType;
 
-    public BoatTypeEnum getBoatType(BoatTypeEnum boatType) {
+    public BoatTypeEnum getBoatType() {
         return this.boatType;
     }
 

@@ -2,8 +2,9 @@ package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.UserRegisterDTO;
 import my.vehiclemarket.model.entity.UserEntity;
-import my.vehiclemarket.model.enums.RolesEnum;
+import my.vehiclemarket.model.entity.UserRoleEntity;
 import my.vehiclemarket.repository.UserRepository;
+import my.vehiclemarket.repository.UserRoleRepository;
 import my.vehiclemarket.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -22,11 +23,13 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public List<UserRegisterDTO> findAll() {
@@ -58,7 +61,13 @@ public class UserServiceImpl implements UserService{
 
         UserEntity user = modelMapper.map(data, UserEntity.class);
 
+
         user.setPassword(passwordEncoder.encode(data.getPassword()));
+
+        UserRoleEntity userRole = userRoleRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("Default role 'USER' not found"));
+
+        user.getRoles().add(userRole);
 
         this.userRepository.save(user);
 
@@ -71,6 +80,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        userRepository.deleteById(getCurrentUser().getId());
     }
+
 }
