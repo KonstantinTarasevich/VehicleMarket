@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import my.vehiclemarket.model.dto.CarEntityDTO;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -25,9 +24,17 @@ public class CarController {
         return new CarEntityDTO();
     }
 
-    @GetMapping("/cars")
-    public String showCarsPage() {
+    @GetMapping()
+    public String showCarsPage(Model model) {
+        model.addAttribute("allCars", carService.getAllCarsSummary());
         return "cars";
+    }
+
+    @GetMapping("/{id}")
+    public String carDetails(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("carDetails", carService.getCarDetails(id));
+
+        return "car-details";
     }
 
     @GetMapping("/add-car")

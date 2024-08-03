@@ -19,12 +19,12 @@ public class TruckServiceImpl implements TruckService {
 
     private final TruckRepository truckRepository;
     private final ModelMapper modelMapper;
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
 
-    public TruckServiceImpl(TruckRepository truckRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
+    public TruckServiceImpl(TruckRepository truckRepository, ModelMapper modelMapper, UserServiceImpl userService) {
         this.truckRepository = truckRepository;
         this.modelMapper = modelMapper;
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
     }
 
     public List<TruckEntityDTO> findAll() {
@@ -36,7 +36,7 @@ public class TruckServiceImpl implements TruckService {
     public boolean save(TruckEntityDTO data) {
         TruckEntity truck = modelMapper.map(data, TruckEntity.class);
 
-        UserEntity owner = userServiceImpl.getCurrentUser();
+        UserEntity owner = userService.getCurrentUser();
         truck.setOwner(owner);
         truck.setDaysActive(0);
 
@@ -97,5 +97,16 @@ public class TruckServiceImpl implements TruckService {
                 .findById(id)
                 .map(this::toTruckDetails)
                 .orElseThrow(() -> new ObjectNotFoundException("Offer not found!", id));
+    }
+
+
+    public List<TruckSummaryDTO> getTrucksForCurrentUser() {
+        Long ownerId = userService.getCurrentUser().getId();
+
+        List<TruckEntity> trucks = truckRepository.getTrucksByOwnerId(ownerId);
+
+        return trucks.stream()
+                .map(truck -> modelMapper.map(truck, TruckSummaryDTO.class))
+                .collect(Collectors.toList());
     }
 }

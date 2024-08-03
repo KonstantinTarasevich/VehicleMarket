@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface BoatRepository extends JpaRepository<BoatEntity, Long> {
 
@@ -19,4 +21,6 @@ public interface BoatRepository extends JpaRepository<BoatEntity, Long> {
     @Modifying
     @Query("DELETE FROM BoatEntity b WHERE b.daysActive > 60")
     void deleteVehiclesWithDaysActiveGreaterThan(int i);
+
+    List<BoatEntity> getBoatsByOwnerId(Long ownerId);
 }

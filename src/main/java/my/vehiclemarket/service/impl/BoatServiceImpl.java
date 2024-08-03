@@ -3,7 +3,9 @@ package my.vehiclemarket.service.impl;
 import my.vehiclemarket.model.dto.BoatDetailsDTO;
 import my.vehiclemarket.model.dto.BoatEntityDTO;
 import my.vehiclemarket.model.dto.BoatSummaryDTO;
+import my.vehiclemarket.model.dto.TruckSummaryDTO;
 import my.vehiclemarket.model.entity.BoatEntity;
+import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.repository.BoatRepository;
 import my.vehiclemarket.service.BoatService;
@@ -12,18 +14,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BoatServiceImpl implements BoatService {
 
     private final BoatRepository boatRepository;
     private final ModelMapper modelMapper;
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
 
-    public BoatServiceImpl(BoatRepository boatRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
+    public BoatServiceImpl(BoatRepository boatRepository, ModelMapper modelMapper, UserServiceImpl userService) {
         this.boatRepository = boatRepository;
         this.modelMapper = modelMapper;
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
     }
 
     public boolean save(BoatEntityDTO data) {
@@ -31,7 +34,7 @@ public class BoatServiceImpl implements BoatService {
 
         BoatEntity boat = modelMapper.map(data, BoatEntity.class);
 
-        UserEntity owner = userServiceImpl.getCurrentUser();
+        UserEntity owner = userService.getCurrentUser();
         boat.setOwner(owner);
         boat.setDaysActive(0);
 
@@ -90,5 +93,15 @@ public class BoatServiceImpl implements BoatService {
                 boatEntity.getBoatType(),
                 boatEntity.getOwner().getPhone()
         );
+    }
+
+    public List<BoatSummaryDTO> getBoatsForCurrentUser() {
+        Long ownerId = userService.getCurrentUser().getId();
+
+        List<BoatEntity> boats = boatRepository.getBoatsByOwnerId(ownerId);
+
+        return boats.stream()
+                .map(boat -> modelMapper.map(boat, BoatSummaryDTO.class))
+                .collect(Collectors.toList());
     }
 }

@@ -18,12 +18,13 @@ public class MotorcycleServiceImpl implements MotorcycleService {
 
     private final MotorcycleRepository motorcycleRepository;
     private final ModelMapper modelMapper;
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
 
-    public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
+
+    public MotorcycleServiceImpl(MotorcycleRepository motorcycleRepository, ModelMapper modelMapper, UserServiceImpl userService) {
         this.motorcycleRepository = motorcycleRepository;
         this.modelMapper = modelMapper;
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
     }
 
     public List<MotorcycleEntityDTO> findAll() {
@@ -35,7 +36,7 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     public boolean save(MotorcycleEntityDTO data) {
         MotorcycleEntity motorcycle = modelMapper.map(data, MotorcycleEntity.class);
 
-        UserEntity owner = userServiceImpl.getCurrentUser();
+        UserEntity owner = userService.getCurrentUser();
         motorcycle.setOwner(owner);
         motorcycle.setDaysActive(0);
 
@@ -93,5 +94,15 @@ public class MotorcycleServiceImpl implements MotorcycleService {
                 .findById(id)
                 .map(this::toMotorcycleDetails)
                 .orElseThrow(() -> new ObjectNotFoundException("Offer not found!", id));
+    }
+
+    public List<MotorcycleSummaryDTO> getMotorcyclesForCurrentUser() {
+        Long ownerId = userService.getCurrentUser().getId();
+
+        List<MotorcycleEntity> motorcycles = motorcycleRepository.getMotorcyclesByOwnerId(ownerId);
+
+        return motorcycles.stream()
+                .map(motorcycle -> modelMapper.map(motorcycle, MotorcycleSummaryDTO.class))
+                .collect(Collectors.toList());
     }
 }

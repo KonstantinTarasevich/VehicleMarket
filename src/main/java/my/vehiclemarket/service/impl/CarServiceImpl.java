@@ -1,6 +1,7 @@
 package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.*;
+import my.vehiclemarket.model.entity.BoatEntity;
 import my.vehiclemarket.model.entity.CarEntity;
 import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
@@ -25,14 +26,14 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
 
 
-    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelMapper modelMapper, UserServiceImpl userServiceImpl) {
+    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelMapper modelMapper, UserServiceImpl userService) {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
     }
 
     public List<CarEntityDTO> findAll() {
@@ -49,7 +50,7 @@ public class CarServiceImpl implements CarService {
     public boolean save(CarEntityDTO data) {
         CarEntity car = modelMapper.map(data, CarEntity.class);
 
-        UserEntity owner = userServiceImpl.getCurrentUser();
+        UserEntity owner = userService.getCurrentUser();
         car.setOwner(owner);
         car.setDaysActive(0);
 
@@ -117,5 +118,15 @@ public class CarServiceImpl implements CarService {
                 .findById(id)
                 .map(this::toCarDetails)
                 .orElseThrow(() -> new ObjectNotFoundException("Offer not found!", id));
+    }
+
+    public List<CarSummaryDTO> getCarsForCurrentUser() {
+        Long ownerId = userService.getCurrentUser().getId();
+
+        List<CarEntity> cars = carRepository.getCarsByOwnerId(ownerId);
+
+        return cars.stream()
+                .map(car -> modelMapper.map(car, CarSummaryDTO.class))
+                .collect(Collectors.toList());
     }
 }
