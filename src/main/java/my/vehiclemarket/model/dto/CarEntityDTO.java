@@ -1,30 +1,37 @@
 package my.vehiclemarket.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import my.vehiclemarket.model.enums.*;
 
 public class CarEntityDTO {
 
-    @NotNull(message = "Name cannot be empty")
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @NotNull(message = "Brand cannot be empty")
+    @NotBlank(message = "Brand is required")
+    @Size(min = 2, max = 50, message = "Brand must be between 2 and 50 characters")
     private String brand;
 
-    @NotNull(message = "Model cannot be empty")
+    @NotBlank(message = "Model is required")
+    @Size(min = 1, max = 50, message = "Model must be between 1 and 50 characters")
     private String model;
 
-    @NotNull(message = "Image URL cannot be empty")
+    @NotBlank(message = "ImageURL is required")
+    @Size(min = 1, max = 50, message = "ImageURL must be between 1 and 50 characters")
     private String imageURL;
 
     private double fuelConsumption;
 
-    @NotNull(message = "Description cannot be empty")
+    @NotBlank(message = "Description is required")
+    @Size(min = 1, max = 200, message = "Description must be between 1 and 200 characters")
     private String description;
 
-    @NotNull
-    @Positive(message = "Price must be a positive number")
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be positive")
     private Double price;
 
     private TransmissionTypeEnum transmissionType;
@@ -35,13 +42,12 @@ public class CarEntityDTO {
     @NotNull(message = "Engine Type cannot be empty")
     private EngineTypeEnum engineType;
 
-    @NotNull
+    @NotNull(message = "Horse Power cannot be empty")
     @Positive(message = "Horse Power must be a positive number")
     private int horsePower;
 
-
-    @NotNull
-    @Positive(message = "Production year must be a positive number")
+    @NotNull(message = "Year is required")
+    @Positive(message = "Year must be positive")
     private int productionYear;
 
     public CarEntityDTO() {}

@@ -1,6 +1,8 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import my.vehiclemarket.model.enums.CarTypeEnum;
 import my.vehiclemarket.model.enums.EngineTypeEnum;
 import my.vehiclemarket.model.enums.TransmissionTypeEnum;
@@ -9,18 +11,23 @@ import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 @Table(name = "cars")
 public class CarEntity extends BaseVehicleEntity {
 
+    @NotNull(message = "Transmission Type cannot be empty")
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true, name = "transmission_type")
+    @Column(name = "transmission_type")
     private TransmissionTypeEnum transmissionType;
 
+    @NotNull(message = "Car Type cannot be empty")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "car_type")
     private CarTypeEnum carType;
 
+    @NotNull(message = "Engine Type cannot be empty")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "engine_type")
     private EngineTypeEnum engineType;
 
+    @NotNull(message = "Horse Power is required")
+    @Positive(message = "Horse power must be positive")
     @Column(nullable = false, name = "horse_power")
     private int horsePower;
 
@@ -28,9 +35,8 @@ public class CarEntity extends BaseVehicleEntity {
         return transmissionType;
     }
 
-    public CarEntity setTransmissionType(TransmissionTypeEnum transmissionType) {
+    public void setTransmissionType(TransmissionTypeEnum transmissionType) {
         this.transmissionType = transmissionType;
-        return this;
     }
 
     public CarTypeEnum getCarType() {

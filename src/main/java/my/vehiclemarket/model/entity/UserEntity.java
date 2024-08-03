@@ -1,6 +1,9 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,18 +12,29 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
+    @NotNull(message = "Name is required")
+    @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
     @Column(nullable = false, name = "full_name")
     private String name;
 
+    @NotNull(message = "Username is required")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
     @Column(unique = true, nullable = false)
     private String username;
 
+    @NotNull(message = "Password is required")
+    @Size(min = 3, message = "Password must be between 3 and 20 characters")
     @Column(nullable = false)
     private String password;
 
+    @NotNull(message = "Email is required")
+    @Size(min = 3, max = 30, message = "Email must be between 3 and 30 characters")
+    @Email(message = "Please provide a valid email address.")
     @Column(unique = true, nullable = false)
     private String email;
 
+    @NotNull(message = "Phone number is required")
+    @Size(min = 3, max = 20, message = "Phone number must be between 3 and 20 characters")
     @Column(nullable = false)
     private String phone;
 

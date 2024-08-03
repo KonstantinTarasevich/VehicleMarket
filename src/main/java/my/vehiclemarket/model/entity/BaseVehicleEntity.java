@@ -1,6 +1,10 @@
 package my.vehiclemarket.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class BaseVehicleEntity {
@@ -9,33 +13,47 @@ public abstract class BaseVehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     @Column(unique = true, nullable = false)
     private String name;
 
+    @NotBlank(message = "Brand is required")
+    @Size(min = 2, max = 50, message = "Brand must be between 2 and 50 characters")
     @Column(nullable = false)
     private String brand;
 
+    @NotBlank(message = "Model is required")
+    @Size(min = 1, max = 50, message = "Model must be between 1 and 50 characters")
     @Column(nullable = false)
     private String model;
 
     @ManyToOne(optional = false)
     private UserEntity owner;
 
+    @NotBlank(message = "ImageURL is required")
+    @Size(min = 1, max = 50, message = "ImageURL must be between 1 and 50 characters")
     @Column(nullable = false, name = "image_URL")
     private String imageURL;
 
-    @Column(nullable = true, name = "fuel_consumption")
+    @Column(name = "fuel_consumption")
     private double fuelConsumption;
 
+    @NotBlank(message = "Description is required")
+    @Size(min = 1, max = 200, message = "Description must be between 1 and 200 characters")
     @Column(nullable = false)
     private String description;
 
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be positive")
     @Column(nullable = false)
     private double price;
 
     @Column(nullable = false, name = "days_active")
     private int daysActive;
 
+    @NotNull(message = "Year is required")
+    @Positive(message = "Year must be positive")
     @Column(nullable = false, name = "production_year")
     private int productionYear;
 
@@ -123,9 +141,8 @@ public abstract class BaseVehicleEntity {
         return daysActive;
     }
 
-    public BaseVehicleEntity setDaysActive(int daysActive) {
+    public void setDaysActive(int daysActive) {
         this.daysActive = daysActive;
-        return this;
     }
 
     public int getProductionYear() {

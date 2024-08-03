@@ -1,38 +1,44 @@
 package my.vehiclemarket.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import my.vehiclemarket.model.enums.BoatTypeEnum;
+import jakarta.validation.constraints.Size;
 
 public class MotorcycleEntityDTO {
 
-    @NotNull(message = "Name cannot be empty")
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
     private String name;
 
-    @NotNull(message = "Brand cannot be empty")
+    @NotBlank(message = "Brand is required")
+    @Size(min = 2, max = 50, message = "Brand must be between 2 and 50 characters")
     private String brand;
 
-    @NotNull(message = "Model cannot be empty")
+    @NotBlank(message = "Model is required")
+    @Size(min = 1, max = 50, message = "Model must be between 1 and 50 characters")
     private String model;
 
-    @NotNull(message = "Image URL cannot be empty")
+    @NotBlank(message = "ImageURL is required")
+    @Size(min = 1, max = 50, message = "ImageURL must be between 1 and 50 characters")
     private String imageURL;
 
     private double fuelConsumption;
 
-    @NotNull(message = "Description cannot be empty")
+    @NotBlank(message = "Description is required")
+    @Size(min = 1, max = 200, message = "Description must be between 1 and 200 characters")
     private String description;
 
-    @NotNull
-    @Positive(message = "Price must be a positive number")
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be positive")
     private Double price;
 
-    @NotNull
-    @Positive(message = "Production year must be a positive number")
+    @NotNull(message = "Year is required")
+    @Positive(message = "Year must be positive")
     private int productionYear;
 
-    @NotNull
-    @Positive(message = "Horse power must be a positive number")
+    @NotNull(message = "Horse Power is required")
+    @Positive(message = "Horse power must be positive")
     private int horsePower;
 
     public MotorcycleEntityDTO() {

@@ -2,10 +2,8 @@ package my.vehiclemarket.controller;
 
 import jakarta.validation.Valid;
 import my.vehiclemarket.model.dto.UserRegisterDTO;
-import my.vehiclemarket.service.UserService;
 import my.vehiclemarket.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,23 +33,29 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String doRegister(
-            @Valid UserRegisterDTO data,
+            @Valid @ModelAttribute("registerData") UserRegisterDTO data,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors() || !data.getPassword().equals(data.getConfirmPassword())) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", data);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
+            return "redirect:/users/register";
+        }
 
-            return "redirect:/register";
+        if (!data.getPassword().equals(data.getConfirmPassword())) {
+            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("passwordMismatchError", "Passwords do not match.");
+            return "redirect:/users/register";
         }
 
         boolean success = userService.register(data);
-
         if (!success) {
-            return "redirect:/register";
+            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("usernameExistsError", "Username already exists.");
+            return "redirect:/users/register";
         }
 
-        return "redirect:/login";
+        return "redirect:/users/login";
     }
 }

@@ -45,21 +45,27 @@ public class AdminController {
 
     @PostMapping("/admin-register")
     public String doRegister(
-            @Valid UserRegisterDTO data,
+            @Valid @ModelAttribute("registerData") UserRegisterDTO data,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors() || !data.getPassword().equals(data.getConfirmPassword())) {
+            if (!data.getPassword().equals(data.getConfirmPassword())) {
+                bindingResult.rejectValue("confirmPassword", "error.confirmPassword", "Passwords do not match");
+            }
+
             redirectAttributes.addFlashAttribute("registerData", data);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registerData", bindingResult);
 
-            return "redirect:/admin_register";
+            return "redirect:/admin-panel/admin-register";
         }
 
         boolean success = adminService.registerAdmin(data);
 
         if (!success) {
-            return "redirect:/admin-register";
+            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("errorMessage", "Username already exists.");
+            return "redirect:/admin-panel/admin-register";
         }
 
         return "redirect:/admin-panel";

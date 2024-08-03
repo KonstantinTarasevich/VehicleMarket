@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Admin Register</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
 </head>
@@ -11,6 +11,9 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-5">
     <h1>Admin Register</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+
     <form th:method="POST"
           th:object="${registerData}"
           th:action="@{/admin-panel/admin-register}">
@@ -24,7 +27,7 @@
                     id="name"
                     name="name"
                     th:field="*{name}"
-                    th:errorclass="'is-invalid alert-danger'"
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="20"
             />
             <small th:each="error: ${#fields.errors('name')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
@@ -38,7 +41,7 @@
                     id="email"
                     name="email"
                     th:field="*{email}"
-                    th:errorclass="'is-invalid alert-danger'"
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="30"
             />
             <small th:each="error: ${#fields.errors('email')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
@@ -52,7 +55,7 @@
                     id="phone"
                     name="phone"
                     th:field="*{phone}"
-                    th:errorclass="'is-invalid alert-danger'"
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="20"
             />
             <small th:each="error: ${#fields.errors('phone')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
@@ -66,8 +69,8 @@
                     id="username"
                     name="username"
                     th:field="*{username}"
-                    th:errorclass="'is-invalid alert-danger'"
-            >
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="20"
+            />
             <small th:each="error: ${#fields.errors('username')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
@@ -80,8 +83,8 @@
                     id="password"
                     name="password"
                     th:field="*{password}"
-                    th:errorclass="'is-invalid alert-danger'"
-            >
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="20"
+            />
             <small th:each="error: ${#fields.errors('password')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
 
@@ -94,8 +97,8 @@
                     id="confirmPassword"
                     name="confirmPassword"
                     th:field="*{confirmPassword}"
-                    th:errorclass="'is-invalid alert-danger'"
-            >
+                    th:errorclass="'is-invalid alert-danger'" required minlength="3" maxlength="20"
+            />
             <small th:each="error: ${#fields.errors('confirmPassword')}" th:text="${error}" class="invalid-feedback text-danger"></small>
         </div>
         <div class="form-group">
