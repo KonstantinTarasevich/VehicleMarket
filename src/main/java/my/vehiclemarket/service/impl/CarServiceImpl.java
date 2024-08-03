@@ -1,13 +1,15 @@
 package my.vehiclemarket.service.impl;
 
-import my.vehiclemarket.model.dto.CarEntityDTO;
+import my.vehiclemarket.model.dto.*;
 import my.vehiclemarket.model.entity.CarEntity;
+import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.model.enums.EngineTypeEnum;
 import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 import my.vehiclemarket.repository.CarRepository;
 import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.service.CarService;
+import my.vehiclemarket.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,5 +65,57 @@ public class CarServiceImpl implements CarService {
 
     public void delete(Long id) {
         carRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CarSummaryDTO> getAllCarsSummary() {
+        return carRepository
+                .findAll()
+                .stream()
+                .map(CarServiceImpl::toCarSummary)
+                .toList();
+    }
+
+    private static CarSummaryDTO toCarSummary(CarEntity carEntity) {
+        return new CarSummaryDTO(
+                carEntity.getId(),
+                carEntity.getName(),
+                carEntity.getBrand(),
+                carEntity.getModel(),
+                carEntity.getPrice(),
+                carEntity.getProductionYear(),
+                carEntity.getCarType(),
+                carEntity.getHorsePower(),
+                carEntity.getEngineType()
+        );
+
+    }
+
+
+    private CarDetailsDTO toCarDetails(CarEntity carEntity) {
+        return new CarDetailsDTO(
+                carEntity.getId(),
+                carEntity.getName(),
+                carEntity.getBrand(),
+                carEntity.getModel(),
+                carEntity.getImageURL(),
+                carEntity.getFuelConsumption(),
+                carEntity.getDescription(),
+                carEntity.getPrice(),
+                carEntity.getTransmissionType(),
+                carEntity.getCarType(),
+                carEntity.getEngineType(),
+                carEntity.getHorsePower(),
+                carEntity.getProductionYear(),
+                carEntity.getOwner().getPhone()
+        );
+    }
+    @Override
+    public CarDetailsDTO getCarDetails(Long id) {
+
+        return this.carRepository
+                .findById(id)
+                .map(this::toCarDetails)
+                .orElseThrow(() -> new ObjectNotFoundException("Offer not found!", id));
     }
 }

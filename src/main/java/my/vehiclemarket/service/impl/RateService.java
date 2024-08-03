@@ -1,8 +1,7 @@
-package my.vehiclemarket.service;
+package my.vehiclemarket.service.impl;
 
 
 import my.vehiclemarket.model.entity.RateEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,10 +11,13 @@ import java.util.List;
 @Service
 public class RateService {
 
-    private final String exchangeRateServiceUrl = "http://localhost:8080/rates";
+    private final String exchangeRateServiceUrl = "http://localhost:8081/rates";
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public RateService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public List<RateEntity> getAllRates() {
         RateEntity[] rates = restTemplate.getForObject(exchangeRateServiceUrl, RateEntity[].class);

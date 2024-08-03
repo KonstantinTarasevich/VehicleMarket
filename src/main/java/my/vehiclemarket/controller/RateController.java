@@ -1,8 +1,7 @@
 package my.vehiclemarket.controller;
 
 import my.vehiclemarket.model.entity.RateEntity;
-import my.vehiclemarket.service.RateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import my.vehiclemarket.service.impl.RateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

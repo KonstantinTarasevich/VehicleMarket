@@ -34,17 +34,19 @@ public class RateService {
 
         try {
             Map<String, Object> response = restTemplate.getForObject(apiUrl + "?app_id=" + appId, Map.class);
-            Map<String, Double> rates = (Map<String, Double>) response.get("rates");
+            Map<String, Object> rates = (Map<String, Object>) response.get("rates");
 
             rates.forEach((currency, rate) -> {
+                Number rateNumber = (Number) rate;
+                Double rateDouble = rateNumber.doubleValue();
                 RateEntity existingRate = rateRepository.findByCurrency(currency);
                 if (existingRate == null) {
                     RateEntity newRate = new RateEntity();
                     newRate.setCurrency(currency);
-                    newRate.setRate(rate);
+                    newRate.setRate(rateDouble);
                     rateRepository.save(newRate);
                 } else {
-                    existingRate.setRate(rate);
+                    existingRate.setRate(rateDouble);
                     rateRepository.save(existingRate);
                 }
             });

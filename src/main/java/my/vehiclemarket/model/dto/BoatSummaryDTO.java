@@ -7,6 +7,6 @@ public record BoatSummaryDTO(Long id,
                              String name,
                              String brand,
                              String model,
-                             Double price,
+                             double price,
                              int productionYear,
                              BoatTypeEnum boatType) {}

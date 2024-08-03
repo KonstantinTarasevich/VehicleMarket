@@ -1,12 +1,13 @@
 package my.vehiclemarket.service.impl;
 
-import my.vehiclemarket.model.dto.MotorcycleEntityDTO;
-import my.vehiclemarket.model.dto.TruckEntityDTO;
+import my.vehiclemarket.model.dto.*;
+import my.vehiclemarket.model.entity.BoatEntity;
 import my.vehiclemarket.model.entity.MotorcycleEntity;
 import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.repository.TruckRepository;
 import my.vehiclemarket.service.TruckService;
+import my.vehiclemarket.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,54 @@ public class TruckServiceImpl implements TruckService {
 
     public void delete(Long id) {
         truckRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TruckSummaryDTO> getAllTrucksSummary() {
+        return truckRepository
+                .findAll()
+                .stream()
+                .map(TruckServiceImpl::toTruckSummary)
+                .toList();
+    }
+
+    private static TruckSummaryDTO toTruckSummary(TruckEntity truckEntity) {
+        return new TruckSummaryDTO(
+                truckEntity.getId(),
+                truckEntity.getName(),
+                truckEntity.getBrand(),
+                truckEntity.getModel(),
+                truckEntity.getPrice(),
+                truckEntity.getProductionYear(),
+                truckEntity.getTruckType(),
+                truckEntity.getLoadCapacity()
+        );
+
+    }
+
+
+    private TruckDetailsDTO toTruckDetails(TruckEntity truckEntity) {
+        return new TruckDetailsDTO(
+                truckEntity.getId(),
+                truckEntity.getName(),
+                truckEntity.getBrand(),
+                truckEntity.getModel(),
+                truckEntity.getImageURL(),
+                truckEntity.getFuelConsumption(),
+                truckEntity.getDescription(),
+                truckEntity.getPrice(),
+                truckEntity.getProductionYear(),
+                truckEntity.getTruckType(),
+                truckEntity.getLoadCapacity(),
+                truckEntity.getOwner().getPhone()
+        );
+    }
+    @Override
+    public TruckDetailsDTO getTruckDetails(Long id) {
+
+        return this.truckRepository
+                .findById(id)
+                .map(this::toTruckDetails)
+                .orElseThrow(() -> new ObjectNotFoundException("Offer not found!", id));
     }
 }

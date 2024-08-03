@@ -10,7 +10,7 @@ public record BoatDetailsDTO(Long id,
                              String imageURL,
                              double fuelConsumption,
                              String description,
-                             Double price,
+                             double price,
                              int productionYear,
                              BoatTypeEnum boatType,
                              String ownerPhone
