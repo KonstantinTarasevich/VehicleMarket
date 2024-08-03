@@ -4,7 +4,6 @@ import my.vehiclemarket.model.dto.UserDetailsDTO;
 import my.vehiclemarket.model.dto.UserRegisterDTO;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.model.entity.UserRoleEntity;
-import my.vehiclemarket.model.enums.RolesEnum;
 import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.repository.UserRoleRepository;
 import my.vehiclemarket.service.UserService;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -34,24 +32,13 @@ public class UserServiceImpl implements UserService{
         this.userRoleRepository = userRoleRepository;
     }
 
-    public List<UserRegisterDTO> findAll() {
-        return userRepository.findAll().stream()
-                .map(user -> modelMapper.map(user, UserRegisterDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public UserRegisterDTO findById(Long id) {
-        UserEntity user = userRepository.findById(id).orElse(null);
-        return user != null ? modelMapper.map(user, UserRegisterDTO.class) : null;
-    }
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
     public UserEntity getCurrentUser() {
         String username = getCurrentUsername();
-        UserEntity user = findUserByUsername(username);
-        return user;
+        return findUserByUsername(username);
     }
 
     public boolean register(UserRegisterDTO data) {
@@ -67,7 +54,7 @@ public class UserServiceImpl implements UserService{
         user.setPassword(passwordEncoder.encode(data.getPassword()));
 
         UserRoleEntity userRole = userRoleRepository.findById(1)
-                .orElseThrow(() -> new RuntimeException("Default role 'USER' not found"));
+                .orElseThrow(() -> new RuntimeException("Role not found"));
 
         user.getRoles().add(userRole);
 
