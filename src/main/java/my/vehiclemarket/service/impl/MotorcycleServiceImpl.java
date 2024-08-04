@@ -2,7 +2,6 @@ package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.*;
 import my.vehiclemarket.model.entity.MotorcycleEntity;
-import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.repository.MotorcycleRepository;
 import my.vehiclemarket.service.MotorcycleService;
@@ -25,12 +24,6 @@ public class MotorcycleServiceImpl implements MotorcycleService {
         this.motorcycleRepository = motorcycleRepository;
         this.modelMapper = modelMapper;
         this.userService = userService;
-    }
-
-    public List<MotorcycleEntityDTO> findAll() {
-        return motorcycleRepository.findAll().stream()
-                .map(motorcycle -> modelMapper.map(motorcycle, MotorcycleEntityDTO.class))
-                .collect(Collectors.toList());
     }
 
     public boolean save(MotorcycleEntityDTO data) {

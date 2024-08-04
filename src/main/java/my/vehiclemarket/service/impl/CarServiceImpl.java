@@ -1,20 +1,14 @@
 package my.vehiclemarket.service.impl;
 
 import my.vehiclemarket.model.dto.*;
-import my.vehiclemarket.model.entity.BoatEntity;
 import my.vehiclemarket.model.entity.CarEntity;
-import my.vehiclemarket.model.entity.TruckEntity;
 import my.vehiclemarket.model.entity.UserEntity;
 import my.vehiclemarket.model.enums.EngineTypeEnum;
 import my.vehiclemarket.model.enums.TransmissionTypeEnum;
 import my.vehiclemarket.repository.CarRepository;
-import my.vehiclemarket.repository.UserRepository;
 import my.vehiclemarket.service.CarService;
 import my.vehiclemarket.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,27 +18,14 @@ import java.util.stream.Collectors;
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
-    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final UserServiceImpl userService;
 
 
-    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelMapper modelMapper, UserServiceImpl userService) {
+    public CarServiceImpl(CarRepository carRepository, ModelMapper modelMapper, UserServiceImpl userService) {
         this.carRepository = carRepository;
-        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.userService = userService;
-    }
-
-    public List<CarEntityDTO> findAll() {
-        return carRepository.findAll().stream()
-                .map(car -> modelMapper.map(car, CarEntityDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    public CarEntityDTO findById(Long id) {
-        CarEntity car = carRepository.findById(id).orElse(null);
-        return car != null ? modelMapper.map(car, CarEntityDTO.class) : null;
     }
 
     public boolean save(CarEntityDTO data) {
