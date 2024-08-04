@@ -4,7 +4,6 @@ import my.vehiclemarket.model.dto.BoatSummaryDTO;
 import my.vehiclemarket.model.dto.CarSummaryDTO;
 import my.vehiclemarket.model.dto.MotorcycleSummaryDTO;
 import my.vehiclemarket.model.dto.TruckSummaryDTO;
-import my.vehiclemarket.service.UserService;
 import my.vehiclemarket.service.impl.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +51,6 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
 
-        return "redirect:/users/logout";
+        return "redirect:/";
     }
 }
