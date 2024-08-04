@@ -14,6 +14,16 @@ public class RateEntity {
     private String currency;
     private Double rate;
 
+
+    public RateEntity() {
+
+    }
+
+    public RateEntity(String currency, double rate) {
+        this.currency = currency;
+        this.rate = rate;
+    }
+
     public Long getId() {
         return id;
     }
